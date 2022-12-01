@@ -1,44 +1,56 @@
 import numpy as np
+import matplotlib.pyplot as plt
 import pandas as pd
 import cv2
 
-df = pd.read_csv('cocomelon/cocomelon_stats.csv')
+
+# Function to convert number into string
+# Switcher is dictionary data type here
+def sub_regioes(argument):
+    switcher = {
+        'Porto': "ÁREA METROPOLITANA DO PORTO",
+        'Leiria': "REGIÃO DE LEIRIA",
+        'Viana do Castelo': "ALTO MINHO",
+        'Coimbra': "REGIÃO DE COIMBRA",
+        'Aveiro': "REGIÃO DE AVEIRO",
+        'Lisboa':"ÁREA METROPOLITANA DE LISBOA",
+        'Braga':"CÁVADO",
+        'Guarda':'BEIRAS E SERRA DA ESTRELA',
+        'Castelo Branco':'BEIRA BAIXA',
+        'Viseu':'VISEU DÃO LAFÕES',
+        'Santarém':'LEZÍRIA DO TEJO',
+        'Vila Real':'DOURO',
+        'Setúbal':'ÁREA METROPOLITANA DE LISBOA',
+        'Faro':'ALGARVE',
+        'Évora':'ALENTEJO CENTRAL',
+        'Bragança':'TERRAS DE TRÁS OS MONTES',
+        'Beja':'BAIXO ALENTEJO',
+        'Portalegre':'ALTO ALENTEJO',
+        'Grandola':'ALENTEJO LITORAL',
+        'Caldas da Rainha':'OESTE',
+        'Tomar':'MÉDIO TEJO',
+        'Penafiel':'TÂMEGA E SOUSA',
+        'Guimarães':'AVE',
+        'Chaves':'ALTO TÂMEGA',
+    }
+    return switcher.get(argument, "nothing")
+
+concelhos = {'Caldas da Rainha', 'Tomar', 'Penafiel', 'Guimarães', 'Chaves'}
+
+df = pd.read_csv('datasets/fogos.csv')
 
 # Removing irrelevant data
-df.pop('title')
-df.pop('description')
-df.pop('localizations.en.description')
-df.pop('snippet.tags')
-df.pop('kind_stats')
-df.pop('contentDetails.dimension')
-df.pop('topicDetails.topicCategories')
-df.pop('snippet.defaultLanguage')
-df.pop('localizations.en.title')
-df.pop('commentCount')
-df.pop('contentDetails.duration')
-df.pop('thumbnails.medium.height')
-df.pop('thumbnails.high.width')
-df.pop('thumbnails.high.height')
-df.pop('thumbnails.medium.width')
-df.pop('thumbnails.default.height')
-df.pop('thumbnails.default.width')
-df.pop('thumbnails.default.url')
-df.pop('thumbnails.medium.url')
-df.pop('thumbnails.high.url')
+# df.pop('title')
 
 # Creating new Column
-df['contrast'] = 0
+df['Sub_Região'] = 0
 
-# for i in range(len(df)):
-#     img = cv2.imread('cocomelon/thumbnails/{}.jpg'.format(df.loc[i, 'id']),3)
-#     crop_img = img[45:315,:] # Take off Black Borders
-#     cv2.imwrite('cocomelon/thumbnails_ready/{}.jpg'.format(df.loc[i, 'id']), crop_img)
-
-# Adding values to contraste
+# Adding values to contrast
 for i in range(len(df)):
-    img = cv2.imread('cocomelon/thumbnails_ready/{}.jpg'.format(df.loc[i, 'id']),0)
-    df.loc[i, 'contrast'] = img.std()
-
+    if(df.loc[i, 'Concelho'] in concelhos):
+        df.loc[i, 'Sub_Região'] = sub_regioes(df.loc[i, 'Concelho'])
+    else:
+        df.loc[i, 'Sub_Região'] = sub_regioes(df.loc[i, 'Distrito'])
+ 
 # Saving new data base
-df.to_csv('cocomelon/cocomelon_stats_ready.csv')
-print(df.head(5))
+df.to_csv('datasets/fogos_tratado.csv')
