@@ -3,9 +3,10 @@ import pandas as pd
 from datetime import datetime
 import cv2
 
-df = pd.read_csv("DadosConcatenados.csv")
+df = pd.read_csv("datasets/datasetDadosTratados.csv")
 
 # Removing irrelevant data (Only for the first time!)
+'''
 df.pop('Codigo_SGIF')
 df.pop('Codigo_ANEPC')
 df.pop('Ano')
@@ -23,8 +24,10 @@ df.pop('TipoCausa')
 df.pop('GrupoCausa')
 df.pop('DescricaoCausa')
 df.pop('FonteAlerta')
+'''
 
-#Creating new Column
+#Criacao TempoAlertaIntervencao
+'''
 df['tempoAlertaIntervencao'] = 0
 
 for i in range(len(df)):
@@ -39,5 +42,37 @@ for i in range(len(df)):
 
 # Saving new data base
 df.to_csv('datasetDadosTratados.csv')
+'''
+#df['tempoAlertaIntervencao'] = 0
+
+for i in range(len(df)):
+    if df.loc[i, 'ClasseArea'] == "]0 a 1 ha[":
+       df.loc[i, 'ClasseArea'] = 0
+
+    elif df.loc[i, 'ClasseArea'] == "[1 a 10 ha]":
+        df.loc[i, 'ClasseArea'] = 1
+
+    elif df.loc[i, 'ClasseArea'] == "[10 a 20 ha]":
+        df.loc[i, 'ClasseArea'] = 2
+
+    elif df.loc[i, 'ClasseArea'] == "[20 a 50 ha]":
+        df.loc[i, 'ClasseArea'] = 3
+
+    elif df.loc[i, 'ClasseArea'] == "[50 a 100 ha]":
+        df.loc[i, 'ClasseArea'] = 4
+
+    elif df.loc[i, 'ClasseArea'] == "[100 a 500 ha]":
+        df.loc[i, 'ClasseArea'] = 5
+
+    elif df.loc[i, 'ClasseArea'] == "[500 a 1000 ha]":
+        df.loc[i, 'ClasseArea'] = 6
+
+    elif df.loc[i, 'ClasseArea'] == "[superior a 1000 ha]":
+        df.loc[i, 'ClasseArea'] = 7
+
+
+#Saving new data base
+df.to_csv('datasets/datasetDadosTratados.csv', index = False)
+
 
 
