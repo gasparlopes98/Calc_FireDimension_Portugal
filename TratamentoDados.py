@@ -2,10 +2,10 @@ import numpy as np
 import pandas as pd
 from datetime import datetime
 import cv2
+import matplotlib.pyplot as plt
 
 df = pd.read_csv("datasets/datasetDadosTratados.csv")
 print(df.columns)
-df.drop(columns='Unnamed: 0', inplace=True,axis=1)
 
 # Removing irrelevant data (Only for the first time!)
 '''
@@ -77,7 +77,7 @@ for i in range(len(df)):
 '''
 
 #Saving new data base
-df.to_csv('datasets/datasetDadosTratados.csv', index = False)
+#df.to_csv('datasets/datasetDadosTratados.csv', index = False)
 
 
 

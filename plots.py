@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 import cv2
-
+'''
 def sub_regioes(argument):
     switcher = {
         "ALTO MINHO": 0,
@@ -47,8 +47,29 @@ for i in range(len(df2)):
 
 # fogos1=list(map(lambda x: float(x)*0.1, fogos))
 # fig = plt.figure(figsize = (10, 5))
- 
+'''
 # creating the bar plot
+df = pd.read_csv("datasets/datasetDadosTratados.csv")
+#print(df.columns)
+
+plt.xlabel("Burned Area")
+plt.title("Relation between feature BUI and Burned area class")
+plot = df.groupby(['ClasseArea'])['FFMC'].mean()
+keys = []
+values = []
+plt.bar(plot.keys(),plot.values)
+plt.show()
+'''
+for key in plot.keys():
+    keys.append(key)
+for value in plot.values:
+    values.append(value)
+
+keys.pop(0)
+values.pop(0)
+'''
+
+'''
 X_axis = np.arange(len(regioes))
   
 plt.bar(X_axis - 0.1, hect, 0.2, label = 'Eucaliptos [k ha] em 2015')
@@ -62,3 +83,4 @@ plt.xticks(rotation = 90)
 plt.subplots_adjust(bottom=0.3)
 plt.legend()
 plt.show()
+'''
