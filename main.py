@@ -4,6 +4,8 @@ from datetime import datetime
 import cv2
 
 df = pd.read_csv("datasets/datasetDadosTratados.csv")
+print(df.columns)
+df.drop(columns='Unnamed: 0', inplace=True,axis=1)
 
 # Removing irrelevant data (Only for the first time!)
 '''
@@ -45,6 +47,8 @@ df.to_csv('datasetDadosTratados.csv')
 '''
 #df['tempoAlertaIntervencao'] = 0
 
+#Definição das Classes!
+'''
 for i in range(len(df)):
     if df.loc[i, 'ClasseArea'] == "]0 a 1 ha[":
        df.loc[i, 'ClasseArea'] = 0
@@ -70,6 +74,7 @@ for i in range(len(df)):
     elif df.loc[i, 'ClasseArea'] == "[superior a 1000 ha]":
         df.loc[i, 'ClasseArea'] = 7
 
+'''
 
 #Saving new data base
 df.to_csv('datasets/datasetDadosTratados.csv', index = False)
