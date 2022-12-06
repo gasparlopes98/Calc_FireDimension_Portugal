@@ -52,13 +52,55 @@ for i in range(len(df2)):
 df = pd.read_csv("datasets/datasetDadosTratados.csv")
 #print(df.columns)
 
+#Plot FFMC
 plt.xlabel("Burned Area")
 plt.title("Relation between feature BUI and Burned area class")
 plot = df.groupby(['ClasseArea'])['FFMC'].mean()
-keys = []
-values = []
 plt.bar(plot.keys(),plot.values)
 plt.show()
+
+#plot ISI
+plt.xlabel("Burned Area")
+plt.title("Relation between feature ISI and Burned area class")
+plot = df.groupby(['ClasseArea'])['ISI'].mean()
+plt.bar(plot.keys(),plot.values)
+plt.show()
+
+#plot DSR
+plt.xlabel("Burned Area")
+plt.title("Relation between feature DSR and Burned area class")
+plot = df.groupby(['ClasseArea'])['DSR'].mean()
+plt.bar(plot.keys(),plot.values)
+plt.show()
+
+#plot FWI
+plt.xlabel("Burned Area")
+plt.title("Relation between feature FWI and Burned area class")
+plot = df.groupby(['ClasseArea'])['FWI'].mean()
+plt.bar(plot.keys(),plot.values)
+plt.show()
+
+#plot DC
+plt.xlabel("Burned Area")
+plt.title("Relation between feature DC and Burned area class")
+plot = df.groupby(['ClasseArea'])['DC'].mean()
+plt.bar(plot.keys(),plot.values)
+plt.show()
+
+#plot DMC
+plt.xlabel("Burned Area")
+plt.title("Relation between feature DMC and Burned area class")
+plot = df.groupby(['ClasseArea'])['DMC'].mean()
+plt.bar(plot.keys(),plot.values)
+plt.show()
+
+#plot BUI
+plt.xlabel("Burned Area")
+plt.title("Relation between feature BUI and Burned area class")
+plot = df.groupby(['ClasseArea'])['BUI'].mean()
+plt.bar(plot.keys(),plot.values)
+plt.show()
+
 '''
 for key in plot.keys():
     keys.append(key)
