@@ -1,35 +1,50 @@
 import numpy as np
 import pandas as pd
 from datetime import datetime
-import cv2
-import matplotlib.pyplot as plt
 
 #df = pd.read_csv("datasets/DadosConcatenados.csv")
 #print(df.columns)
 
-# Removing irrelevant data and  (Only for the first time!)
-'''
-df.pop('Codigo_SGIF')
-df.pop('Codigo_ANEPC')
-df.pop('Ano')
-df.pop('Mes')
-df.pop('Dia')
-df.pop('Hora')
-df.pop('IncSup24horas')
-df.pop('DTCCFR')
-df.pop('Local')
-df.pop('X_Militar')
-df.pop('Y_Militar')
-df.pop('X_ETRS89')
-df.pop('Y_ETRS89')
-#df.pop('TipoCausa')
-#df.pop('GrupoCausa')
-#df.pop('DescricaoCausa')
-#df.pop('FonteAlerta')
+def pop():
+    df.pop('Codigo_SGIF')
+    df.pop('Codigo_ANEPC')
+    df.pop('Ano')
+    df.pop('Mes')
+    df.pop('Dia')
+    df.pop('Hora')
+    df.pop('IncSup24horas')
+    df.pop('DTCCFR')
+    df.pop('Local')
+    df.pop('X_Militar')
+    df.pop('Y_Militar')
+    df.pop('X_ETRS89')
+    df.pop('Y_ETRS89')
+    df.pop('TipoCausa')
+    df.pop('GrupoCausa')
+    df.pop('DescricaoCausa')
+    df.pop('FonteAlerta') 
 
+def classe_fogo(argument):
+    switcher = {
+        "]0 a 1 ha[": 0,
+        "[1 a 10 ha]": 1,
+        "[10 a 20 ha]": 2,
+        "[20 a 50 ha]": 3,
+        "[50 a 100 ha]": 4,
+        "[100 a 500 ha]":5,
+        "[500 a 1000 ha]":6,
+        "[superior a 1000 ha]":7,
+    }
+    return switcher.get(argument, "nothing")
+
+##############
+# Tratamento
+##############
+'''
+# Removing irrelevant data
+pop()
 
 #Criacao TempoAlertaIntervencao
-
 df['tempoAlertaIntervencao'] = 0
 
 for i in range(len(df)):
@@ -44,34 +59,13 @@ for i in range(len(df)):
 
 #Definição das Classes!
 
+# Change classe_fogo with number
 for i in range(len(df)):
-    if df.loc[i, 'ClasseArea'] == "]0 a 1 ha[":
-       df.loc[i, 'ClasseArea'] = 0
-
-    elif df.loc[i, 'ClasseArea'] == "[1 a 10 ha]":
-        df.loc[i, 'ClasseArea'] = 1
-
-    elif df.loc[i, 'ClasseArea'] == "[10 a 20 ha]":
-        df.loc[i, 'ClasseArea'] = 2
-
-    elif df.loc[i, 'ClasseArea'] == "[20 a 50 ha]":
-        df.loc[i, 'ClasseArea'] = 3
-
-    elif df.loc[i, 'ClasseArea'] == "[50 a 100 ha]":
-        df.loc[i, 'ClasseArea'] = 4
-
-    elif df.loc[i, 'ClasseArea'] == "[100 a 500 ha]":
-        df.loc[i, 'ClasseArea'] = 5
-
-    elif df.loc[i, 'ClasseArea'] == "[500 a 1000 ha]":
-        df.loc[i, 'ClasseArea'] = 6
-
-    elif df.loc[i, 'ClasseArea'] == "[superior a 1000 ha]":
-        df.loc[i, 'ClasseArea'] = 7
+    df.loc[i, 'ClasseArea'] = classe_fogo(df.loc[i, 'ClasseArea'])
 '''
 
 
-df = pd.read_csv("datasets/datasetDadosTratados.csv")
+df = pd.read_csv("datasets/fogos_tratados.csv")
 #print(df.columns)
 
 #ID para primeira coluna
@@ -98,7 +92,4 @@ for i in range(len(df)):
 print(j)
 print(aux)
 
-#df.to_csv('datasets/datasetDadosTratados.csv', index = False)
-
-
-
+#df.to_csv('datasets/fogos_tratados.csv', index = False)
