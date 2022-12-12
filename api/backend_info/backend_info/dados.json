@@ -1,0 +1,15 @@
+{
+    "cidades" : 
+    [
+        {
+        "cidade" : "Porto",
+        "fwi" : 0.1,
+        "bui" : 2,
+        "isi" : 0.4,
+        "ffmc" : 55.2,
+        "dc" : 11,
+        "dmc":2,
+        "dsr":4
+        }
+    ]
+}
