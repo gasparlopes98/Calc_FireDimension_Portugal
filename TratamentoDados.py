@@ -1,6 +1,8 @@
 import numpy as np
 import pandas as pd
 from datetime import datetime
+import tensorflow
+from numpy.random import RandomState
 
 #df = pd.read_csv("datasets/DadosConcatenados.csv")
 #print(df.columns)
@@ -36,10 +38,24 @@ def classe_fogo(argument):
         "[superior a 1000 ha]":7,
     }
     return switcher.get(argument, "nothing")
+def nomeColuna(argument):
+    # ID para primeira coluna
+    '''
+    argument.columns.values[0] = "id"
+    res = df.columns.values[0]
+    # displaying column
+    print("Displaying column names : ",res)
+    '''
+def apagar_dados(argument):
+    for i in range(len(argument)):
+        if argument.loc[i, 'AreaTotal_ha'] == 0 and argument.loc[i, 'GrupoCausa'] == "Reacendimentos":
+            print(argument.index[i])
+            argument = argument.drop(labels = i,axis=0)
+            #print(argument.index[i])
+            #print(df.loc[i, 'TipoCausa'])
 
-##############
-# Tratamento
-##############
+    return argument
+
 '''
 # Removing irrelevant data
 pop()
@@ -64,32 +80,17 @@ for i in range(len(df)):
     df.loc[i, 'ClasseArea'] = classe_fogo(df.loc[i, 'ClasseArea'])
 '''
 
+if __name__ == "__main__":
+    ##############
+    # Tratamento
+    ##############
+    df = pd.read_csv("datasets/fogos_tratados.csv")
+    #print(df.columns)
+    rng = RandomState()
+    train = df.sample(frac = 0.75, random_state=rng)
+    test = df.loc[~df.index.isin(train.index)]
 
-df = pd.read_csv("datasets/fogos_tratados.csv")
-#print(df.columns)
-
-#ID para primeira coluna
-'''
-df.columns.values[0] = "id"
-res = df.columns.values[0]
-# displaying column
-print("Displaying column names : ",res)
-'''
-
-#Saving new data base
-j = 0
-aux = 0
-for i in range(len(df)):
-    if df.loc[i, 'AreaTotal_ha'] < 0.01:
-        aux += 1
-        print("DMC ->" + str(df.loc[i,'DMC']))
-
-    if df.loc[i, 'AreaTotal_ha'] < 0.01 and df.loc[i, 'TipoCausa'] == "Desconhecida":
-        j+= 1
-        #print(df.loc[i, 'AreaTotal_ha'])
-        #print(df.loc[i, 'TipoCausa'])
-
-print(j)
-print(aux)
-
-#df.to_csv('datasets/fogos_tratados.csv', index = False)
+    #df = apagar_dados(df)
+    df.to_csv('datasets/fogos_tratados.csv', index = False)
+    train.to_csv('datasets/treino.csv',index = False)
+    test.to_csv('datasets/teste.csv', index=False)

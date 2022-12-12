@@ -2,12 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9cc72eec-4a0a-46c8-8989-ee75d52e8955" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/Calc_FireDimension_Portugal.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Material/met_20180501_20180531_fog_mm_co_pt.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TratamentoDados.py" beforeDir="false" afterPath="$PROJECT_DIR$/TratamentoDados.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/datasets/fogos_tratados.csv" beforeDir="false" afterPath="$PROJECT_DIR$/datasets/fogos_tratados.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/datasets/fogos_v1.csv" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
