@@ -4,14 +4,14 @@ import matplotlib.pyplot as plt
 import sklearn
 from sklearn.neural_network import MLPClassifier
 from sklearn.neural_network import MLPRegressor
-from sklearn.metrics import classification_report,confusion_matrix
+from sklearn.metrics import classification_report,confusion_matrix,ConfusionMatrixDisplay
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error
 from math import sqrt
 from sklearn.metrics import r2_score
 
 # Read Dataset
-df = pd.read_csv('datasets/fogos_tratados.csv') 
+df = pd.read_csv('datasets/fogos_tratados2.csv') 
 df.describe().transpose()
 
 # Creating Arrays for the Features and the Response Variable
@@ -32,10 +32,15 @@ mlp.fit(X_train,y_train)
 
 predict_train = mlp.predict(X_train)
 predict_test = mlp.predict(X_test)
-
+cm = confusion_matrix(y_test,predict_test)
 print('=== Confusion Matrix ===')
-print(confusion_matrix(y_train,predict_train))
+print(cm)
 print('\n=== Classification Report ===')
-print(classification_report(y_train,predict_train))
+print(classification_report(y_test,predict_test))
+
+disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=mlp.classes_)
+disp.plot()
+
+plt.show()
 
 # ref: https://www.pluralsight.com/guides/machine-learning-neural-networks-scikit-learn
