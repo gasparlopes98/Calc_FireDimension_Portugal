@@ -1,14 +1,10 @@
 import pandas as pd
 import numpy as np 
 import matplotlib.pyplot as plt
-import sklearn
 from sklearn.neural_network import MLPClassifier
 from sklearn.neural_network import MLPRegressor
 from sklearn.metrics import classification_report,confusion_matrix,ConfusionMatrixDisplay
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import mean_squared_error
-from math import sqrt
-from sklearn.metrics import r2_score
 
 # Read Dataset
 df = pd.read_csv('datasets/fogos_tratados2.csv') 
@@ -27,7 +23,7 @@ y = df[target_column].values
 X_train, X_test, y_train, y_test = train_test_split(X, y.ravel(), test_size=0.25, random_state=40)
 
 # Neural Network
-mlp = MLPClassifier(hidden_layer_sizes=(8,8,8), activation='relu', solver='adam', max_iter=500)
+mlp = MLPClassifier(hidden_layer_sizes=(8,8,8), activation='relu', solver='adam', max_iter=5000)
 mlp.fit(X_train,y_train)
 
 predict_train = mlp.predict(X_train)

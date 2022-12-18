@@ -37,6 +37,7 @@ def pop(df):
     df.pop('Longitude') 
     df.pop('CodCausa')
     df.pop('AreaTotal_ha')
+    df.pop('Duracao_Horas')
     return df
     
 def distritos(argument):
@@ -60,7 +61,7 @@ def distritos(argument):
         'Beja': 16,
         'Portalegre': 17,
     }
-    return switcher.get(argument, "nothing")
+    return switcher.get(argument, 18)
 
 #Definição das Classes!
 def classe_fogo(argument):
@@ -126,6 +127,7 @@ if __name__ == "__main__":
         if(i%100 ==0):
             print(i)
         df.loc[i,'ClasseArea']=classe_fogo(df.loc[i,'ClasseArea'])
+        df = distrto_binario(df,i)
         df = tempo_alerta(df,i)
         df = apagar_dados(df,i)
     # df= nomeColuna(df)
@@ -134,7 +136,7 @@ if __name__ == "__main__":
     df =pop(df)
     
     # Save dataset
-    df.to_csv('datasets/fogos_tratados2.csv')
+    df.to_csv('datasets/fogos_tratados2.csv',index = False)
     df = pd.read_csv("datasets/fogos_tratados2.csv")
-    df.pop('Unnamed: 0')
+    df.pop('Unnamed: 0.1')
     df.to_csv('datasets/fogos_tratados2.csv')
