@@ -20,10 +20,10 @@ df.describe().transpose()
 X = df[predictors].values
 y = df[target_column].values
 
-X_train, X_test, y_train, y_test = train_test_split(X, y.ravel(), test_size=0.25, random_state=40)
+X_train, X_test, y_train, y_test = train_test_split(X, y.ravel(), test_size=0.2, random_state=40)
 
 # Neural Network
-mlp = MLPClassifier(hidden_layer_sizes=(8,8,8), activation='relu', solver='adam', max_iter=5000)
+mlp = MLPClassifier(hidden_layer_sizes=(8,8,8), activation='relu', solver='adam', max_iter=5000, learning_rate='adaptive')
 mlp.fit(X_train,y_train)
 
 predict_train = mlp.predict(X_train)
