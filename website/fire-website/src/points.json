@@ -1,0 +1,134 @@
+[
+  {
+    "Id": 1,
+    "Location": "Porto",
+    "Fun_Fact": "Tem o melhor clube de Portugal",
+    "Latitude": 41.17803005552277,
+    "Longitude": -8.608541104047488
+  },
+  {
+    "Id": 2,
+    "Location": "Leiria",
+    "Fun_Fact": "Não Existe",
+    "Latitude": 39.748308, 
+    "Longitude": -8.814193
+  },
+  {
+    "Id": 3,
+    "Location": "Viana do Castelo",
+    "Fun_Fact": "Para quem gosta de bolas",
+    "Latitude": 41.692974442130534, 
+    "Longitude": -8.829159836222862
+  },
+  {
+    "Id": 4,
+    "Location": "Vila Real",
+    "Fun_Fact": "Fodeste o carro para lá chegar",
+    "Latitude": 41.30322294479358,  
+    "Longitude": -7.740847715636214
+  },
+  {
+    "Id": 5,
+    "Location": "Bragança",
+    "Fun_Fact": "Posta à mirandesa",
+    "Latitude": 41.48539901492546,  
+    "Longitude": -7.181547003686727
+  },
+  {
+    "Id": 6,
+    "Location": "Braga",
+    "Fun_Fact": "Novo Rio de Janeiro",
+    "Latitude":41.545673812067946 ,  
+    "Longitude": -8.42480404916145
+  },
+  {
+    "Id": 7,
+    "Location": "Aveiro",
+    "Fun_Fact": "Veneza Portugesa (Made in China)",
+    "Latitude": 40.85970482358856,   
+    "Longitude": -8.625143126004042
+  },
+  {
+    "Id": 8,
+    "Location": "Viseu",
+    "Fun_Fact": "Vjeu",
+    "Latitude": 40.65868785429191 ,   
+    "Longitude": -7.911232556248874
+  },
+  {
+    "Id": 9,
+    "Location": "Guarda",
+    "Fun_Fact": "Frio",
+    "Latitude": 40.53223007192795,    
+    "Longitude": -7.25258607641892
+  },
+  {
+    "Id": 10,
+    "Location": "Coimbra",
+    "Fun_Fact": "O que acontece na Queima de Coimbra, fica no pornhub",
+    "Latitude": 40.235484454377854,     
+    "Longitude": -8.406610535928607
+  },
+  {
+    "Id": 11,
+    "Location": "Castelo Branco",
+    "Fun_Fact": "Quente e Frio",
+    "Latitude": 39.82070396016172,     
+    "Longitude": -7.506744978753815
+  },
+  {
+    "Id": 12,
+    "Location": "Santarem",
+    "Fun_Fact": "A porta de Lisboa",
+    "Latitude": 39.260022790534585,     
+    "Longitude": -8.702847344929339
+  },
+  {
+    "Id": 13,
+    "Location": "Portalegre",
+    "Fun_Fact": "Nem aparece no Google Maps",
+    "Latitude": 39.314035946061715,      
+    "Longitude": -7.417611823444974
+  },
+  {
+    "Id": 14,
+    "Location": "Lisboa",
+    "Fun_Fact": "Lisboa Menina e Foça, Entupida",
+    "Latitude": 38.69745792578337,       
+    "Longitude": -9.202900416619489
+  },
+  {
+    "Id": 15,
+    "Location": "Setubal",
+    "Fun_Fact": "Terra do Golfinho",
+    "Latitude": 38.528273063239716,      
+    "Longitude": -8.882550563134503
+  },
+  {
+    "Id": 16,
+    "Location": "Setubal",
+    "Fun_Fact": "Terra do Golfinho",
+    "Latitude": 38.528273063239716,      
+    "Longitude": -8.882550563134503
+  },
+  {
+    "Id": 17,
+    "Location": "Beja",
+    "Fun_Fact": "Nadaaaaaaaaaaa",
+    "Latitude": 38.020711901381574,     
+    "Longitude": -7.863223381838935  
+  },
+  {
+    "Id": 18,
+    "Location": "Faro",
+    "Fun_Fact": "Terra dos Ingleses",
+    "Latitude": 37.01952604772419,    
+    "Longitude": -7.9307462242247695 
+  }
+  
+
+
+
+
+
+]
