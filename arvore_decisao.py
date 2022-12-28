@@ -3,7 +3,8 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import ConfusionMatrixDisplay, confusion_matrix, accuracy_score, classification_report
 import matplotlib.pyplot as plt
 from sklearn.tree import DecisionTreeClassifier
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import RandomForestClassifier, ExtraTreesClassifier, AdaBoostClassifier, BaggingClassifier, GradientBoostingClassifier
+from xgboost import XGBClassifier
 from imblearn.over_sampling import SMOTE
 import time
 
@@ -25,20 +26,36 @@ y = df[target_column].values
 sm = SMOTE(random_state=2022)
 X, y = sm.fit_resample(X, y)
 
-X_train, X_test, y_train, y_test = train_test_split(X, y.ravel(), test_size=0.25, random_state=2022)
+X_train, X_test, y_train, y_test = train_test_split(X, y.ravel(), test_size=0.25, random_state=2022) # 25% para teste, 75% para treino
 
 print("Which model do you want to use?")
 print("1 - Decision Tree Classifier")
-print("2 - Random Forest Model")
+print("2 - Random Forest Classifier")
+print("3 - Extremely Randomized Trees Classifier")
+print("4 - Adaptive Booster Classifier")
+print("5 - Bagging Classifier")
+print("6 - Gradient Boosting Classifier")
+print("7 - XGBoost Classifier")
+
+'''
+Treino:
+1 - Decision Tree Classifier                ~77.40% em ~3.16s
+2 - Random Forest Classifier                ~88.55% em ~50.34s
+3 - Extremely Randomized Trees Classifier   ~89.28% em ~19.65s
+4 - Adaptive Booster Classifier             ~30,25% em ~33.77s
+5 - Bagging Classifier                      ~87.63% em ~203.94s
+6 - Gradient Boosting Classifier            ~46.29% em ~581.21s
+7 - XGBoost Classifier                      ~71.34% em ~64.56s
+'''
+
 modelo = 0
 
-while (modelo != 1 and modelo != 2):
+while modelo not in (1, 2, 3, 4, 5, 6, 7):
     modelo = int(input("Model: "))
-    if (modelo == 1):
+    if (modelo == 1): # Decision Tree classifier
         print("Running...")
         tempo0 = time.time()
 
-        # Create an instance of a Decision Tree classifier
         # Defining the random_state for reproducibility
         clf = DecisionTreeClassifier(random_state=2022)
 
@@ -47,15 +64,58 @@ while (modelo != 1 and modelo != 2):
 
         # Predictions for the test set
         predictions = clf.predict(X_test)
-        #print(predictions)
 
         tempo = time.time() - tempo0
-    elif (modelo == 2):
+    elif (modelo == 2): # Random Forest Classifier
         print("Running...")
         tempo0 = time.time()
 
-        # Fit a Random Forest model
         clf = RandomForestClassifier(n_estimators=100, max_features="auto", class_weight="balanced", random_state=2022)
+        clf.fit(X_train, y_train)
+        predictions = clf.predict(X_test)
+
+        tempo = time.time() - tempo0
+    elif (modelo == 3): # Extremely Randomized Trees Classifier
+        print("Running...")
+        tempo0 = time.time()
+
+        clf = ExtraTreesClassifier(n_estimators=100, random_state=2022)
+        clf.fit(X_train, y_train)
+        predictions = clf.predict(X_test)
+
+        tempo = time.time() - tempo0
+    elif (modelo == 4): # Adaptive Booster Classifier
+        print("Running...")
+        tempo0 = time.time()
+
+        clf = AdaBoostClassifier(n_estimators=100, learning_rate=1, random_state=2022)
+        clf.fit(X_train, y_train)
+        predictions = clf.predict(X_test)
+       
+        tempo = time.time() - tempo0
+    elif (modelo == 5): # Bagging Classifier
+        print("Running...")
+        tempo0 = time.time()
+
+        clf = BaggingClassifier(n_estimators=100, random_state=2022)
+        clf.fit(X_train, y_train)
+        predictions = clf.predict(X_test)
+       
+        tempo = time.time() - tempo0
+    elif (modelo == 6): # Gradient Boosting Classifier
+        print("Running...")
+        tempo0 = time.time()
+
+        clf = GradientBoostingClassifier(n_estimators=100, random_state=2022)
+        clf.fit(X_train, y_train)
+        predictions = clf.predict(X_test)
+       
+        tempo = time.time() - tempo0
+    elif (modelo == 7): # XGBoost Classifier
+        print("Running...")
+        tempo0 = time.time()
+
+        clf = XGBClassifier()
         clf.fit(X_train, y_train)
         predictions = clf.predict(X_test)
 
