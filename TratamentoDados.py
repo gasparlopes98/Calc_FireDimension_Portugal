@@ -1,14 +1,14 @@
 ############################
 #  Tratamento do Dataset   #
 ############################
-
 import numpy as np
 import pandas as pd
 from datetime import datetime
 from numpy.random import RandomState
 
+
 # Delete Irrelevant Data
-def pop(df):
+def delete_column(df):
     df.pop('Codigo_SGIF')
     df.pop('Codigo_ANEPC')
     df.pop('IncSup24horas')
@@ -21,31 +21,44 @@ def pop(df):
     df.pop('TipoCausa')
     df.pop('GrupoCausa')
     df.pop('DescricaoCausa')
-    df.pop('FonteAlerta') 
-    df.pop('AreaPov_ha') 
-    df.pop('AreaMato_ha') 
-    df.pop('AreaAgric_ha') 
-    df.pop('DataHoraAlerta') 
-    df.pop('DataHora_PrimeiraIntervencao') 
-    df.pop('DataHora_Extincao') 
-    df.pop('Distrito') 
-    df.pop('Concelho') 
-    df.pop('Freguesia') 
-    df.pop('RNAP') 
-    df.pop('RNMPF') 
-    df.pop('Latitude') 
-    df.pop('Longitude') 
+    df.pop('FonteAlerta')
+    df.pop('AreaPov_ha')
+    df.pop('AreaMato_ha')
+    df.pop('AreaAgric_ha')
+    df.pop('DataHoraAlerta')
+    df.pop('DataHora_PrimeiraIntervencao')
+    df.pop('DataHora_Extincao')
+    df.pop('Distrito')
+    df.pop('Concelho')
+    df.pop('Freguesia')
+    df.pop('RNAP')
+    df.pop('RNMPF')
+    df.pop('Latitude')
+    df.pop('Longitude')
     df.pop('CodCausa')
     df.pop('AreaTotal_ha')
     df.pop('Duracao_Horas')
+
     return df
-    
+
+def new_column(df):
+    df['tempoAlertaIntervencao'] = 0
+    df['AreaVegetacao'] = 0
+    df['D0'] = 0
+    df['D1'] = 0
+    df['D2'] = 0
+    df['D3'] = 0
+    df['D4'] = 0
+    df["AlturaDia"] = 0
+    df['E1'] = 0
+    return df
+
 def distritos(argument):
     switcher = {
         'Porto': 0,
         'Leiria': 1,
         'Viana do Castelo': 2,
-        'Coimbra':3,
+        'Coimbra': 3,
         'Aveiro': 4,
         'Lisboa': 5,
         'Braga': 6,
@@ -63,19 +76,106 @@ def distritos(argument):
     }
     return switcher.get(argument, 18)
 
-#Definição das Classes!
+# Definição das Classes!
 def classe_fogo(argument):
     switcher = {
         "]0 a 1 ha[": 0,
-        "[1 a 10 ha]": 1,
-        "[10 a 20 ha]": 2,
-        "[20 a 50 ha]": 3,
-        "[50 a 100 ha]": 4,
-        "[100 a 500 ha]":5,
-        "[500 a 1000 ha]":6,
-        "[superior a 1000 ha]":7,
+        "[1 a 10 ha]": 0,
+        "[10 a 20 ha]": 1,
+        "[20 a 50 ha]": 1,
+        "[50 a 100 ha]": 2,
+        "[100 a 500 ha]": 2,
+        "[500 a 1000 ha]": 3,
+        "[superior a 1000 ha]": 4,
     }
     return switcher.get(argument, 8)
+
+"""
+def sub_regioes(argument):
+    switcher = {
+        'Porto': "ÁREA METROPOLITANA DO PORTO",
+        'Leiria': "REGIÃO DE LEIRIA",
+        'Viana do Castelo': "ALTO MINHO",
+        'Coimbra': "REGIÃO DE COIMBRA",
+        'Aveiro': "REGIÃO DE AVEIRO",
+        'Lisboa':"ÁREA METROPOLITANA DE LISBOA",
+        'Braga':"CÁVADO",
+        'Guarda':'BEIRAS E SERRA DA ESTRELA',
+        'Castelo Branco':'BEIRA BAIXA',
+        'Viseu':'VISEU DÃO LAFÕES',
+        'Santarém':'LEZÍRIA DO TEJO',
+        'Vila Real':'DOURO',
+        'Setúbal':'ÁREA METROPOLITANA DE LISBOA',
+        'Faro':'ALGARVE',
+        'Évora':'ALENTEJO CENTRAL',
+        'Bragança':'TERRAS DE TRÁS OS MONTES',
+        'Beja':'BAIXO ALENTEJO',
+        'Portalegre':'ALTO ALENTEJO',
+        'Grandola':'ALENTEJO LITORAL',
+        'Caldas da Rainha':'OESTE',
+        'Tomar':'MÉDIO TEJO',
+        'Penafiel':'TÂMEGA E SOUSA',
+        'Guimarães':'AVE',
+        'Chaves':'ALTO TÂMEGA',
+    }
+    return switcher.get(argument, "npthing")
+
+def sub_regioes(argument):
+    switcher = {
+        "ÁREA METROPOLITANA DO PORTO":82.99,
+        "REGIÃO DE LEIRIA":127.73,
+        "ALTO MINHO":71.85,
+        "REGIÃO DE COIMBRA":233.07,
+        "REGIÃO DE AVEIRO":80.53,
+        "ÁREA METROPOLITANA DE LISBOA":66.26,
+        "CÁVADO":40.35,
+        'BEIRAS E SERRA DA ESTRELA':111.60,
+        'BEIRA BAIXA':185.77,
+        'VISEU DÃO LAFÕES':138.88,
+        'LEZÍRIA DO TEJO':204.85,
+        'DOURO':70.13,
+        'ALGARVE':145.2,
+        'ALENTEJO CENTRAL':338.53,
+        'TERRAS DE TRÁS OS MONTES':144.49,
+        'BAIXO ALENTEJO':244.67,
+        'ALTO ALENTEJO':255.37,
+        'ALENTEJO LITORAL':291.16,
+        'OESTE':61.69,
+        'MÉDIO TEJO':153.86,
+        'TÂMEGA E SOUSA':58.84,
+        'AVE':45.13,
+        'ALTO TÂMEGA':70.97,
+    }
+    return switcher.get(argument, 1)
+"""
+def are_vegetacao(argument):
+    switcher = {
+        'Porto': 82.99,
+        'Leiria': 127.73,
+        'Viana do Castelo': 71.85,
+        'Coimbra': 233.07,
+        'Aveiro': 80.53,
+        'Lisboa': 36.26,
+        'Braga': 40.35,
+        'Guarda': 111.60,
+        'Castelo Branco': 185.77,
+        'Viseu': 138.88,
+        'Santarém': 204.85,
+        'Vila Real': 70.13,
+        'Setúbal': 100,
+        'Faro': 145.2,
+        'Évora': 338.53,
+        'Bragança': 144.49,
+        'Beja': 244.67,
+        'Portalegre': 255.37,
+        'Grandola': 201.16,
+        'Caldas da Rainha': 61.69,
+        'Tomar': 153.86,
+        'Penafiel': 58.84,
+        'Guimarães': 45.13,
+        'Chaves': 70.97,
+    }
+    return switcher.get(argument, 1)
 
 # ID para primeira coluna
 def nomeColuna(argument):
@@ -84,59 +184,112 @@ def nomeColuna(argument):
     # displaying column
     # print("Displaying column names : ",res)
     return res
-    
+
 # Delete Outliers
-def apagar_dados(df,i):
-    if (df.loc[i, 'AreaTotal_ha'] < 0.1 or df.loc[i, 'GrupoCausa'] == "Reacendimentos" or df.loc[i, 'DSR'] == 'A' or df.loc[i, 'Duracao_Horas'] == 'A'):
+def apagar_dados(df, i):
+    if (df.loc[i, 'AreaTotal_ha'] < 0.1 or df.loc[i, 'GrupoCausa'] == "Reacendimentos" or df.loc[i, 'DSR'] == 'A' or
+            df.loc[i, 'Duracao_Horas'] == 'A'):
         df = df.drop(i)
     return df
 
+
 # Criacao TempoAlertaIntervencao
-def tempo_alerta(df,i):
-    #print(df.loc[i, 'DataHoraAlerta'])
+def tempo_alerta(df, i):
+    # print(df.loc[i, 'DataHoraAlerta'])
     try:
         dAlerta = datetime.strptime(df.loc[i, 'DataHoraAlerta'], "%Y-%m-%d %H:%M:%S")
         dIntervencao = datetime.strptime(df.loc[i, 'DataHora_PrimeiraIntervencao'], "%Y-%m-%d %H:%M:%S")
-        df.loc[i,'tempoAlertaIntervencao'] = abs(dAlerta - dIntervencao).total_seconds() / 3600.0
+        df.loc[i, 'tempoAlertaIntervencao'] = abs(dAlerta - dIntervencao).total_seconds() / 3600.0
     except:
         pass
     return df
 
+
 # Binary Encoding
-def distrto_binario(df,i):
-    dist = distritos(df.loc[i,'Distrito'])
-    df.loc[i,'D0']= format(dist, '08b')[3]
-    df.loc[i,'D1']= format(dist, '08b')[4]
-    df.loc[i,'D2']= format(dist, '08b')[5]
-    df.loc[i,'D3']= format(dist, '08b')[6]
-    df.loc[i,'D4']= format(dist, '08b')[7]
+def distrto_binario(df, i):
+    dist = distritos(df.loc[i, 'Distrito'])
+    df.loc[i, 'D0'] = format(dist, '08b')[3]
+    df.loc[i, 'D1'] = format(dist, '08b')[4]
+    df.loc[i, 'D2'] = format(dist, '08b')[5]
+    df.loc[i, 'D3'] = format(dist, '08b')[6]
+    df.loc[i, 'D4'] = format(dist, '08b')[7]
     return df
 
+
+# Remove extra Data
+classe0 = 178
+classe1 = 4
+
+
+
+def dec(df, i):
+    if (df.loc[i, 'ClasseArea'] == 0):
+        dec.i0 -= 1
+        if (dec.i0 > 0):
+            return True
+        dec.i0 = classe0
+    elif (df.loc[i, 'ClasseArea'] == 1):
+        dec.i1 -= 1
+        if (dec.i1 > 0):
+            return True
+        dec.i1 = classe1
+    return False
+
+
+dec.i0 = classe0
+dec.i1 = classe1
+
+
 if __name__ == "__main__":
+    concelhos = {'Caldas da Rainha', 'Tomar', 'Penafiel', 'Guimarães', 'Chaves'}
     df = pd.read_csv("datasets/dadosConcatenados.csv")
-    
-    df['tempoAlertaIntervencao'] = 0
-    df['D0'] = 0
-    df['D1'] = 0
-    df['D2'] = 0
-    df['D3'] = 0
-    df['D4'] = 0
-    
+
+    df = new_column(df)
+
     # Change classe_fogo with number
+    
     for i in range(len(df)):
-        if(i%100 ==0):
+
+        if (i % 100 == 0):
             print(i)
-        df.loc[i,'ClasseArea']=classe_fogo(df.loc[i,'ClasseArea'])
-        df = distrto_binario(df,i)
-        df = tempo_alerta(df,i)
-        df = apagar_dados(df,i)
-    # df= nomeColuna(df)
-    
+
+        # # Delete Outliers
+        if (df.loc[i, 'AreaTotal_ha'] < 0.5 or df.loc[i, 'GrupoCausa'] == "Reacendimentos" or df.loc[i, 'DSR'] == 'A' or df.loc[i, 'Duracao_Horas'] == 'A'):
+        #if (df.loc[i, 'DSR'] == 'A'):
+            df = df.drop(i)
+
+        # Funcao para apagar a classe 1 e 0.
+        elif(dec(df,i) == True):
+            df = df.drop(i)
+        else:
+            df.loc[i, 'ClasseArea'] = classe_fogo(df.loc[i, 'ClasseArea'])
+            df = distrto_binario(df, i)
+            df = tempo_alerta(df, i)
+            if (df.loc[i, 'Concelho'] in concelhos):
+                df.loc[i, 'AreaVegetacao'] = are_vegetacao(df.loc[i, 'Concelho'])
+            else:
+                df.loc[i, 'AreaVegetacao'] = are_vegetacao(df.loc[i, 'Distrito'])
+
+            if df.loc[i, 'Hora'] >= 7 and df.loc[i, 'Hora'] <= 18:
+                df.loc[i, 'AlturaDia'] = 1
+            else:
+                df.loc[i, 'AlturaDia'] = 0
+
+            if df.loc[i, 'Mes'] >= 6 and df.loc[i, 'Mes'] <= 9:
+                df.loc[i, 'E1'] = 1
+            else:
+                df.loc[i, 'E1'] = 0
+
+                # df= nomeColuna(df)
+
+
     # Removing irrelevant data
-    df =pop(df)
-    
+    df = delete_column(df)
+    #df.pop('Concelho')
+    #df.pop('Distrito')
     # Save dataset
-    df.to_csv('datasets/fogos_tratados2.csv',index = False)
-    df = pd.read_csv("datasets/fogos_tratados2.csv")
-    df.pop('Unnamed: 0.1')
-    df.to_csv('datasets/fogos_tratados2.csv')
+    df.to_csv('datasets/fogos_tratados5.csv', index=False)
+    df = pd.read_csv("datasets/fogos_tratados4.csv")
+    df.pop('Unnamed: 0')
+    df.to_csv('datasets/fogos_tratados5.csv')
+
