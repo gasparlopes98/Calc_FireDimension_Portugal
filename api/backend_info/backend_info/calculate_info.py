@@ -114,13 +114,14 @@ def get_data_from_ipma():
 
     for estacao in data[time]:
         if estacao in weather_data:
-            info_list.append({
-                "city" : weather_data.get(estacao),
-                "wind_speed" : data[time][estacao]['intensidadeVentoKM'],
-                "temperature" : data[time][estacao]['temperatura'],
-                "humidity" : data[time][estacao]['humidade'],
-                "precipitation" : data[time][estacao]['precAcumulada']
-            })
+            if data[time][estacao] != None:
+                info_list.append({
+                    "city" : weather_data.get(estacao),
+                    "wind_speed" : data[time][estacao]['intensidadeVentoKM'],
+                    "temperature" : data[time][estacao]['temperatura'],
+                    "humidity" : data[time][estacao]['humidade'],
+                    "precipitation" : data[time][estacao]['precAcumulada']
+                })
         
 
     

@@ -7,7 +7,7 @@ class FWICLASS:
         self.p = prcp
     def FFMCcalc(self,ffmc0):
         mo = (147.2*(101.0 - ffmc0))/(59.5 + ffmc0) #*Eq. 1*#
-        rf = self.p
+        rf = self.p + 1
         if (self.p > 0.5):
             rf = self.p - 0.5 #*Eq. 2*#
         if(mo > 150.0):
