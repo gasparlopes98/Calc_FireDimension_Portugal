@@ -14,9 +14,9 @@ import pointsData from "./points.json";
 import Button from "@mui/material-next/Button";
 import { Container } from "./container";
 
-let fires=[]
+let fires = [];
 
-let information_to_send=[]
+let information_to_send = [];
 
 const rectangle = [
   [37.31495984620076, -15.485525918583946],
@@ -25,9 +25,9 @@ const rectangle = [
 
 function App() {
   const [points, setPoints] = useState(null);
-  const [type,setType] = useState("");
-  const [severity,setSeverity] = useState(0);
-  const[number,setNumber] = useState(0);
+  const [type, setType] = useState("");
+  const [severity, setSeverity] = useState(0);
+  const [number, setNumber] = useState(0);
 
   const triggerText = "Add Fire";
   const onSubmit = (event) => {
@@ -35,45 +35,45 @@ function App() {
     let fire = {
       latitude: event.target.latitude.value,
       longitude: event.target.longitude.value,
-      type:type,
-      severity:severity
-    }
-    information_to_send.push(fire)
-    setNumber(information_to_send.length)
+      type: type,
+      severity: severity,
+    };
+    information_to_send.push(fire);
+    setNumber(information_to_send.length);
   };
 
-  async function push_info_to_be_processed (){
-    
+  async function push_info_to_be_processed() {
     const response = await fetch("/info/", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: information_to_send
+      body: information_to_send,
     });
-    let fire_info = await response.json()
-    console.log(fire_info)
-    information_to_send=[]
+    let fire_info = await response.json();
+    console.log(fire_info);
+    information_to_send = [];
     setNumber(0);
-    fires.push(fire_info)
-
+    fires.push(fire_info);
   }
 
   return (
     <div style={{ backgroundColor: "#1f1f1f" }}>
       <div style={{ float: "right" }}>
-        <span style={{color:"white"}}>
+        <span style={{ color: "white" }}>
           Number of fires to send : {number}
         </span>
-        <Container 
-        triggerText={triggerText} 
-        onSubmit={onSubmit} 
-        setType={setType}
-        setSeverity={setSeverity}
+        <Container
+          triggerText={triggerText}
+          onSubmit={onSubmit}
+          setType={setType}
+          setSeverity={setSeverity}
         />
         <span>
-          <button onClick={push_info_to_be_processed} variant="contained">Process</button>
+          <button onClick={push_info_to_be_processed} variant="contained">
+            Process
+          </button>
         </span>
       </div>
-      <div style={{ zIndex: "10",top:0,left:0 }}>
+      <div style={{ zIndex: "10", top: 0, left: 0 }}>
         <MapContainer center={[39.48, -8.2245]} zoom={7} scrollWheelZoom={true}>
           <TileLayer
             attribution='&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
@@ -89,7 +89,12 @@ function App() {
               }}
             >
               <Popup>
-                Trucks: {eachData.trucks} <br/> Firetrucks : {eachData.trucks} <br /> Helly: {eachData.hely} 
+                {eachData.resources_by_area.map((needed) => {
+                   return <p>
+                    Zone :{needed.area} <br/> Trucks: {needed.trucks} <br /> Firetrucks : {needed.trucks}{" "}
+                    <br /> Helly: {needed.hely}
+                  </p>;
+                })}
               </Popup>
             </Marker>
           ))}
