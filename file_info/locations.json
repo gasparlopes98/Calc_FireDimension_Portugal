@@ -1,0 +1,110 @@
+[
+    {
+        "zone" : "z1",
+        "name" : "Viana do Castelo",
+        "latitude" : 41.712222508918934,
+        "longitude" : -8.806705101142862
+    },
+    {
+        "zone" : "z2",
+        "name" : "Vila Real",
+        "latitude" : 41.29088158629485,
+        "longitude" : -7.756613954122813
+    },
+    {
+        "zone" : "z3",
+        "name" : "Bragança",
+        "latitude" : 41.829542105290905, 
+        "longitude" : -6.783786960000815
+    },
+    {
+        "zone" : "z4",
+        "name" : "Braga",
+        "latitude" : 41.58260700551688, 
+        "longitude" : -8.385708743655039
+    },
+    {
+        "zone" : "z5",
+        "name" : "Porto",
+        "latitude" : 41.20798774751906,
+        "longitude" :  -8.586759655773585
+    },
+    {
+        "zone" : "z6",
+        "name" : "Aveiro",
+        "latitude" : 40.67210098402624,
+        "longitude" : -8.68056087164484
+    },
+    {
+        "zone" : "z7",        
+        "name" : "Viseu",
+        "latitude" : 40.67567941624777,
+        "longitude" : -7.92085625237863
+    },
+    {
+        "zone" : "z8",
+        "name" : "Guarda",
+        "latitude" : 40.55823425259035,
+        "longitude" : -7.271783877330025
+    },
+    {
+        "zone" : "z9",
+        "name" : "Coimbra",
+        "latitude" : 40.22502288841864, 
+        "longitude" : -8.401850928731815
+    },
+    {
+        "zone" : "z10",
+        "name" : "Leiria",
+        "latitude" : 39.75085054686663,
+        "longitude" : -8.809408001436752
+    },
+    {
+        "zone" : "z11",
+        "name" : "Castelo Branco",
+        "latitude" : 39.84942494090375, 
+        "longitude" : -7.503715898141303
+    },
+    {
+        "zone" : "z12",
+        "name" : "Santarem",
+        "latitude" : 39.23478991285261, 
+        "longitude" : -8.684531176624889
+    },
+    {
+        "zone" : "z13",
+        "name" : "Portalegre",
+        "latitude" : 39.31869495709305,
+        "longitude" : -7.453516248702239
+    },
+    {
+        "zone" : "z14",
+        "name" : "Lisboa",
+        "latitude" : 38.721542920221644, 
+        "longitude" : -9.136481029853261
+    },
+    {
+        "zone" : "z15",
+        "name" : "Setubal",
+        "latitude" : 38.526648285988145, 
+        "longitude" : -8.887846182656283
+    },
+    {
+        "zone" : "z16",
+        "name" : "Evora",
+        "latitude" : 38.56935069819223, 
+        "longitude" : -7.912552662965164
+    },
+    {
+        "zone" : "z17",
+        "name" : "Beja",
+        "latitude" : 38.00936908689703, 
+        "longitude" : -7.863703720198918
+    },
+    {
+        "zone" : "z18",
+        "name" : "Faro",
+        "latitude" : 37.015250117351684,  
+        "longitude" : -7.927332814511221
+    }
+]

@@ -1,0 +1,100 @@
+[
+    {
+    "zone" : "Z1",
+    "jeeps": 50,
+    "trucks" : 30,
+    "air" : 0
+    },
+    {
+    "zone" : "Z2",
+    "jeeps": 69,
+    "trucks" : 40,
+    "air" : 1
+    },
+    {
+    "zone" : "Z3",
+    "jeeps": 55,
+    "trucks" : 35,
+    "air" : 0
+    },
+    {
+    "zone" : "Z4",
+    "jeeps": 70,
+    "trucks" : 43,
+    "air" : 0
+    },
+    {
+    "zone" : "Z5",
+    "jeeps": 42,
+    "trucks" : 37,
+    "air" : 0
+    },
+    {
+    "zone" : "Z6",
+    "jeeps": 70,
+    "trucks" : 39,
+    "air" : 2
+    },
+    {
+    "zone" : "Z7",
+    "jeeps": 40,
+    "trucks" : 23,
+    "air" : 0
+    },
+    {
+    "zone" : "Z8",
+    "jeeps": 69,
+    "trucks" : 15,
+    "air" : 0
+    },    {
+    "zone" : "Z9",
+    "jeeps": 150,
+    "trucks" : 75,
+    "air" : 0
+    },    {
+    "zone" : "Z10",
+    "jeeps": 65,
+    "trucks" : 47,
+    "air" : 2
+    },    {
+    "zone" : "Z11",
+    "jeeps": 45,
+    "trucks" : 29,
+    "air" : 0
+    },    {
+    "zone" : "Z12",
+    "jeeps": 23,
+    "trucks" : 17,
+    "air" : 1
+    },   {
+    "zone" : "Z13",
+    "jeeps": 45,
+    "trucks" : 34,
+    "air" : 0
+    },   {
+    "zone" : "Z14",
+    "jeeps": 45,
+    "trucks" : 28,
+    "air" : 1
+    },   {
+    "zone" : "Z15",
+    "jeeps": 60,
+    "trucks" : 29,
+    "air" : 2
+    },   {
+    "zone" : "Z16",
+    "jeeps": 40,
+    "trucks" : 29,
+    "air" : 0
+    },   {
+    "zone" : "Z17",
+    "jeeps": 100,
+    "trucks" : 62,
+    "air" : 0
+    },   {
+    "zone" : "Z18",
+    "jeeps": 70,
+    "trucks" : 38,
+    "air" : 1
+    }
+]
