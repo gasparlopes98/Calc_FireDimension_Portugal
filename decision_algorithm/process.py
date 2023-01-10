@@ -1,7 +1,6 @@
 import json
 import pandas as pd
 import numpy as np
-import copy
 
 path_distance_matrix_location = "file_info/distance_matrix.txt"
 path_resources_by_severity = "decision_algorithm/severidade_info.json"
@@ -15,12 +14,11 @@ def process_info(fire_severity_by_zone):
     cols = len(fire_severity_by_zone)+1
     allocation_matrix = np.zeros((cols, 3, rows))
     #get meios usados para severidade
-    needed_resources = get_needed_resources(fire_severity_by_zone)
-    need= copy.copy(needed_resources)
+    need=needed_resources = get_needed_resources(fire_severity_by_zone)
     # get meios por zona
     allocation_matrix = get_resources_by_zone(allocation_matrix,cols)
-    basic_attribuiton(needed_resources,allocation_matrix,cols)
-    # RRbasic_attribuiton(needed_resources,allocation_matrix,cols)
+    # basic_attribuiton(needed_resources,allocation_matrix,cols)
+    RRbasic_attribuiton(needed_resources,allocation_matrix,cols)
     print_matrix(cols,allocation_matrix)
     print("Distance Traveled: {}".format(calculate_distance_traveled(allocation_matrix,need).round()))
     
@@ -91,12 +89,13 @@ def RRbasic_attribuiton(needed_resources,allocation_matrix,nfires):
     occurance=True
     count= np.zeros(nfires-1)
     # Demand
+    fire_index=0
     for fire in needed_resources:
-        fire_index=list(needed_resources).index(fire)
         allocation_matrix[fire_index][0][num_district]=fire['jeeps']
         allocation_matrix[fire_index][1][num_district]=fire['trucks']
         allocation_matrix[fire_index][2][num_district]=fire['air']
-
+        fire_index+=1
+    
     while occurance:
         for fire in needed_resources:
             fire_index=list(needed_resources).index(fire)
