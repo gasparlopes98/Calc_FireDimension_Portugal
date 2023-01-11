@@ -26,7 +26,6 @@ const rectangle = [
 function App() {
   const [points, setPoints] = useState(null);
   const [type, setType] = useState("");
-  const [severity, setSeverity] = useState(0);
   const [number, setNumber] = useState(0);
 
   const triggerText = "Add Fire";
@@ -35,8 +34,7 @@ function App() {
     let fire = {
       latitude: event.target.latitude.value,
       longitude: event.target.longitude.value,
-      type: type,
-      severity: severity,
+      type: type
     };
     information_to_send.push(fire);
     setNumber(information_to_send.length);
@@ -65,7 +63,6 @@ function App() {
           triggerText={triggerText}
           onSubmit={onSubmit}
           setType={setType}
-          setSeverity={setSeverity}
         />
         <span>
           <button onClick={push_info_to_be_processed} variant="contained">
