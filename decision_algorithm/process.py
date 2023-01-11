@@ -2,9 +2,9 @@ import json
 import pandas as pd
 import numpy as np
 
-path_distance_matrix_location = "file_info/distance_matrix.txt"
-path_resources_by_severity = "decision_algorithm/severidade_info.json"
-path_resources_by_zone = "file_info/resources_by_zone.json"
+path_distance_matrix_location = "../file_info/distance_matrix.txt"
+path_resources_by_severity = "severidade_info.json"
+path_resources_by_zone = "../file_info/resources_by_zone.json"
 
 num_district=18
 rows = num_district+1
@@ -17,10 +17,17 @@ def process_info(fire_severity_by_zone):
     need=needed_resources = get_needed_resources(fire_severity_by_zone)
     # get meios por zona
     allocation_matrix = get_resources_by_zone(allocation_matrix,cols)
-    # basic_attribuiton(needed_resources,allocation_matrix,cols)
-    RRbasic_attribuiton(needed_resources,allocation_matrix,cols)
-    print_matrix(cols,allocation_matrix)
-    print("Distance Traveled: {}".format(calculate_distance_traveled(allocation_matrix,need).round()))
+    mean_severity = fire_severity_average(fire_severity_by_zone)
+    if (mean_severity < 2):
+        basic_attribuiton(needed_resources, allocation_matrix, cols)
+    else:
+        RRbasic_attribuiton(needed_resources, allocation_matrix, cols)
+    print_matrix(cols, allocation_matrix)
+    print("Distance Traveled: {}".format(calculate_distance_traveled(allocation_matrix, need).round()))
+    needed_resources = get_needed_resources(fire_severity_by_zone)
+    # get meios por zona
+    allocation_matrix = get_resources_by_zone(allocation_matrix, cols)
+
     
 def allocate_resource(nfires,allocation_matrix,fire,fire_index,zones,resource,resource_index):
     if allocation_matrix[nfires-1][resource_index][zones] >= fire[resource]:
@@ -31,7 +38,15 @@ def allocate_resource(nfires,allocation_matrix,fire,fire_index,zones,resource,re
         allocation_matrix[fire_index][resource_index][zones]+=allocation_matrix[nfires-1][resource_index][zones]
         fire[resource] -= allocation_matrix[nfires-1][resource_index][zones]
         allocation_matrix[nfires-1][resource_index][zones] = 0
-
+# calcula a severidade média dos incendios para chamar o melhor método
+def fire_severity_average(fire_severity_by_zone):
+    severity = 0
+    average_severity = 0
+    for fires in fire_severity_by_zone:
+        severity += fires['severity']
+        average_severity = severity / len(fire_severity_by_zone)
+        print(average_severity)
+    return average_severity
 def basic_attribuiton(needed_resources,allocation_matrix,nfires):
     for fire in needed_resources:
         fire_index=list(needed_resources).index(fire)
