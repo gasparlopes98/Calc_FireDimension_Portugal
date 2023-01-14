@@ -4,6 +4,7 @@ import modi
 
 district = 18
 def modi_optimization(initial_matrix,fires):
+    print("== MODI Optimization ==")
     # initialization
     cols = len(initial_matrix)
     suply = np.zeros((1, 3, district))
@@ -38,8 +39,8 @@ def modi_optimization(initial_matrix,fires):
             demand.append(sum(supply)-sum(demand))
             v = np.zeros((district, 1))
             costs = np.c_[costs, v]
-            flag=1
-        else:
+            flag=1    
+        elif(sum(supply)<sum(demand)):
             supply.append(sum(demand)-sum(supply))
             v = np.zeros((1,cols-1))
             costs = np.r_[costs, v]
@@ -114,4 +115,7 @@ print('Initial Cost: ', int(pro.calculate_distance_traveled(allocation_matrix,fi
 
 modi_matrix=modi_optimization(allocation_matrix, fires)
 print('Optimal cost: ', int(pro.calculate_distance_traveled(modi_matrix,fires)))
+# pro.print_matrix(modi_matrix)
+
+modi_matrix=pro.removeFire(modi_matrix,1,fires)
 # pro.print_matrix(modi_matrix)
