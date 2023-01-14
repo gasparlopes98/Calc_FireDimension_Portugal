@@ -1,0 +1,4 @@
+# Byte-compiled / optimized / DLL files
+decision_algorithm/__pycache__/
+predictions/__pycache__/
+.idea/
