@@ -44,50 +44,69 @@ def modi_optimization(initial_matrix,fires):
             v = np.zeros((1,cols-1))
             costs = np.r_[costs, v]
             flag=0
+
+        try:
+            # MODI
+            ans = modi.transportation_method(supply, demand, costs)
+
+            # Delete Balancer consumer/producer 
+            ans = np.delete(ans, ans.shape[flag]-1, flag)
+            costs = np.delete(costs, costs.shape[flag]-1, flag)
+            
+            # Update Allocation Matrix
+            dist=0
+            for res in ans:
+                fire_index=0
+                initial_matrix[len(fires)][resource][dist]=supply[dist]
+                for fire in res:
+                    initial_matrix[fire_index][resource][dist]= fire
+                    initial_matrix[len(fires)][resource][dist]-= fire
+                    fire_index+=1
+                dist+=1
+        except:
+            pass
         
-        # MODI
-        ans = modi.transportation_method(supply, demand, costs)
-        
-        # Delete Balancer consumer/producer 
-        ans = np.delete(ans, ans.shape[flag]-1, flag)
-        costs = np.delete(costs, costs.shape[flag]-1, flag)
-        
-        # Update Allocation Matrix
-        dist=0
-        for res in ans:
-            fire_index=0
-            initial_matrix[len(fires)][resource][dist]=supply[dist]
-            for fire in res:
-                initial_matrix[fire_index][resource][dist]= fire
-                initial_matrix[len(fires)][resource][dist]-= fire
-                fire_index+=1
-            dist+=1
-    
     return initial_matrix
 
 
-fires=[{
-    'zone' : 'Z1',
-    'type' : 'F',
-    'severity' : 4
-},{
-    'zone' : 'Z1',
-    'type' : 'F',
-    'severity' : 3
-},{
-    'zone' : 'Z10',
-    'type' : 'F',
-    'severity' : 3
-},{
-    'zone' : 'Z11',
-    'type' : 'F',
-    'severity' : 3
-},{
-    'zone' : 'Z1',
-    'type' : 'F',
-    'severity' : 3
-}
-]
+fires = [{
+        'zone': 'Z1',
+        'type': 'F',
+        'severity': 4
+    }, {
+        'zone': 'Z1',
+        'type': 'F',
+        'severity': 3
+    }, {
+        'zone': 'Z1',
+        'type': 'F',
+        'severity': 4
+    }, {
+        'zone': 'Z10',
+        'type': 'F',
+        'severity': 1
+    }, {
+        'zone': 'Z9',
+        'type': 'F',
+        'severity': 4
+    }, {
+        'zone': 'Z10',
+        'type': 'F',
+        'severity': 4
+    }, {
+        'zone': 'Z18',
+        'type': 'F',
+        'severity': 4
+    }, {
+        'zone': 'Z18',
+        'type': 'F',
+        'severity': 4
+    }, {
+        'zone': 'Z18',
+        'type': 'F',
+        'severity': 4
+    }
+    ]
 
 allocation_matrix=pro.process_info(fires)
 print('Initial Cost: ', int(pro.calculate_distance_traveled(allocation_matrix,fires)))
