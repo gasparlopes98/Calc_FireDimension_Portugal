@@ -2,29 +2,12 @@
 
 import numpy as np
 
-def get_balanced(supply, demand, costs, penalties = None):
-    total_supply = sum(supply)
-    total_demand = sum(demand)
-    
-    if total_supply < total_demand:
-        if penalties is None:
-            raise Exception('Supply less than demand, penalties required')
-        new_supply = supply + [total_demand - total_supply]
-        new_costs = costs + [penalties]
-        return new_supply, demand, new_costs
-    if total_supply > total_demand:
-        new_demand = demand + [total_supply - total_demand]
-        new_costs = costs + [[0 for _ in demand]]
-        return supply, new_demand, new_costs
-    return supply, demand, costs
-
-def vogel(supply, demand,costs,initial):
+def vogel(supply, demand, costs):
     supply_copy = supply.copy()
     demand_copy = demand.copy()
     m=len(supply)
     n=len(demand)
-    i = 0
-    j = 0
+    cost = j = i = 0
     bfs = []
     while len(bfs) < len(supply) + len(demand) - 1:
         s = supply_copy[i]
@@ -37,10 +20,6 @@ def vogel(supply, demand,costs,initial):
             i += 1
         elif demand_copy[j] == 0 and j < len(demand) - 1:
             j += 1
-    # for i in range(len(supply)):
-    #     for j in range(len(demand)):
-    #         bfs.append(((i, j), initial[i][j]))
-    cost=0
     bfs_arr = [[0 for i in range(n)] for j in range(m)] 
     for item in bfs:
         bfs_arr[item[0][0]][item[0][1]]=item[1]
@@ -132,29 +111,19 @@ def loop_pivoting(bfs, loop):
         new_bfs.append((p, v))       
     return new_bfs
 
-def transportation_method(supply, demand, costs, initial, penalties = None):
-    balanced_supply, balanced_demand, balanced_costs = get_balanced(
-        supply, demand, costs
-    )
+def transportation_method(supply, demand, costs, penalties = None):
     def inner(bfs):
-        us, vs = get_us_and_vs(bfs, balanced_costs)
-        ws = get_ws(bfs, balanced_costs, us, vs)
+        us, vs = get_us_and_vs(bfs, costs)
+        ws = get_ws(bfs, costs, us, vs)
         if can_be_improved(ws):
             ev_position = get_entering_variable_position(ws)
             loop = get_loop([p for p, v in bfs], ev_position)
             return inner(loop_pivoting(bfs, loop))
         return bfs
     
-    basic_variables = inner(vogel(balanced_supply, balanced_demand,costs,initial))
+    basic_variables = inner(vogel(supply, demand,costs))
     ans = np.zeros((len(costs), len(costs[0])))
     for (i, j), v in basic_variables:
         ans[i][j] = int(v)
 
     return ans
-
-def get_total_cost(costs, ans):
-    total_cost = 0
-    for i, row in enumerate(costs):
-        for j, cost in enumerate(row):
-            total_cost += cost * ans[i][j]
-    return total_cost

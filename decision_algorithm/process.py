@@ -26,7 +26,7 @@ def process_info(fire_severity_by_zone):
         RRbasic_attribuiton(needed_resources, allocation_matrix, cols)
     # print_matrix(cols, allocation_matrix)
     
-    return allocation_matrix,cols
+    return allocation_matrix
     
 def allocate_resource(nfires,allocation_matrix,fire,fire_index,zones,resource,resource_index):
     if allocation_matrix[nfires-1][resource_index][zones] >= fire[resource]:
@@ -219,26 +219,9 @@ def calculate_distance_traveled(allocation_matrix,needed_resources):
     fire_index = distance_traveled = 0
     for fire in needed_resources:
         fire_zone=int(fire['zone'][1:])-1
-        # print(fire_zone," ",fire_index)
         for district in range(num_district):
             resources=allocation_matrix[fire_index][0][district]+allocation_matrix[fire_index][1][district]+allocation_matrix[fire_index][2][district]
             distance=get_distances(fire_zone,district)
             distance_traveled+=(resources*distance)
         fire_index+=1
     return distance_traveled
-
-# fires=[{
-#     'zone' : 'Z1',
-#     'type' : 'F',
-#     'severity' : 4
-# },{
-#     'zone' : 'Z1',
-#     'type' : 'F',
-#     'severity' : 3
-# },{
-#     'zone' : 'Z2',
-#     'type' : 'F',
-#     'severity' : 4
-# }
-# ]
-# allocation_matrix,cols=process_info(fires)
