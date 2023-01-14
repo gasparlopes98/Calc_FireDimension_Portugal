@@ -9,7 +9,6 @@ path_resources_by_zone = "file_info/resources_by_zone.json"
 num_district=18
 rows = num_district+1
 
-# dicionario que contem como indice zona e como objeto a severidade
 def process_info(fire_severity_by_zone):
     cols = len(fire_severity_by_zone)+1
     allocation_matrix = np.zeros((cols, 3, rows))
@@ -18,16 +17,17 @@ def process_info(fire_severity_by_zone):
     # get meios por zona
     allocation_matrix = get_resources_by_zone(allocation_matrix,cols)
     
-    mean_severity = fire_severity_average(fire_severity_by_zone)
-    
-    if (mean_severity < 2):
-        basic_attribuiton(needed_resources, allocation_matrix, cols)
+    if (enough_rr(needed_resources)):
+        # print("== Basic Attribution ==")
+        # basic_attribuiton(needed_resources, allocation_matrix, cols)
+        print("== RR Attribution ==")
+        RR_attribuiton(needed_resources, allocation_matrix, cols)
     else:
-        RRbasic_attribuiton(needed_resources, allocation_matrix, cols)
-    # print_matrix(cols, allocation_matrix)
+        print("== RR Attribution ==")
+        RR_attribuiton(needed_resources, allocation_matrix, cols)
     
     return allocation_matrix
-    
+
 def allocate_resource(nfires,allocation_matrix,fire,fire_index,zones,resource,resource_index):
     if allocation_matrix[nfires-1][resource_index][zones] >= fire[resource]:
         allocation_matrix[fire_index][resource_index][zones]+=fire[resource]
@@ -37,16 +37,6 @@ def allocate_resource(nfires,allocation_matrix,fire,fire_index,zones,resource,re
         allocation_matrix[fire_index][resource_index][zones]+=allocation_matrix[nfires-1][resource_index][zones]
         fire[resource] -= allocation_matrix[nfires-1][resource_index][zones]
         allocation_matrix[nfires-1][resource_index][zones] = 0
-
-# calcula a severidade média dos incendios para chamar o melhor método
-def fire_severity_average(fire_severity_by_zone):
-    severity = 0
-    average_severity = 0
-    for fires in fire_severity_by_zone:
-        severity += fires['severity']
-        average_severity = severity / len(fire_severity_by_zone)
-        # print(average_severity)
-    return average_severity
 
 def basic_attribuiton(needed_resources,allocation_matrix,nfires):
     for fire in needed_resources:
@@ -101,7 +91,7 @@ def allocate_resourceRR(nfires,allocation_matrix,fire,fire_index,zones,resource,
         allocation_matrix[nfires-1][resource_index][zones] -= allocation_matrix[nfires-1][resource_index][zones]
         fire[resource] -= allocation_matrix[nfires-1][resource_index][zones]
         
-def RRbasic_attribuiton(needed_resources,allocation_matrix,nfires):
+def RR_attribuiton(needed_resources,allocation_matrix,nfires):
     occurance=True
     count= np.zeros(nfires-1)
     # Demand
@@ -170,14 +160,14 @@ def get_needed_resources_by_fire_severity():
     with open(path_resources_by_severity, 'r') as j:
      return json.loads(j.read())
 
-def get_resources_by_zone(allocation_matrix,cols):
+def get_resources_by_zone(matrix,cols):
     with open(path_resources_by_zone, 'r') as j:
         resource= json.loads(j.read())
     for zone in range(num_district):
-        allocation_matrix[cols-1][0][zone]=resource[zone]['jeeps']
-        allocation_matrix[cols-1][1][zone]=resource[zone]['trucks']
-        allocation_matrix[cols-1][2][zone]=resource[zone]['air']
-    return allocation_matrix
+        matrix[cols-1][0][zone]=resource[zone]['jeeps']
+        matrix[cols-1][1][zone]=resource[zone]['trucks']
+        matrix[cols-1][2][zone]=resource[zone]['air']
+    return matrix
 
 def get_sorted_distances(zone):
     df = pd.read_csv(path_distance_matrix_location, header=None)
@@ -187,6 +177,31 @@ def get_sorted_distances(zone):
 def get_distances(zone1, zone2):
     df = pd.read_csv(path_distance_matrix_location, header=None)
     return df[zone1][zone2]
+
+def enough_rr(needed_resources):
+    dist_initial_resource_jeep = 0
+    dist_initial_resource_truck = 0
+    fire_resource_jeep =fire_resource_truck= 0
+
+    resourceZone = get_resources_by_zone(np.zeros((1, 3, rows)),1)
+    
+    # Recursos necessários para fogos        
+    fire_index=0
+    for fire in needed_resources:
+        fire_resource_jeep +=fire['jeeps']
+        fire_resource_truck +=fire['trucks']
+        fire_index+=1
+    
+    # Recursos disponiveis
+    for dist in range(num_district):
+        dist_initial_resource_jeep += resourceZone[0][0][dist]
+        dist_initial_resource_truck += resourceZone[0][1][dist]
+    
+    if((fire_resource_jeep/dist_initial_resource_jeep)>0.75 or (fire_resource_truck/dist_initial_resource_truck)>0.8):
+        return False
+    else:
+        return True
+   
 
 def print_matrix(matrix):
     cols=matrix.shape[0]

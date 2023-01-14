@@ -38,8 +38,8 @@ def modi_optimization(initial_matrix,fires):
             demand.append(sum(supply)-sum(demand))
             v = np.zeros((district, 1))
             costs = np.c_[costs, v]
-            flag=1
-        else:
+            flag=1    
+        elif(sum(supply)<sum(demand)):
             supply.append(sum(demand)-sum(supply))
             v = np.zeros((1,cols-1))
             costs = np.r_[costs, v]
