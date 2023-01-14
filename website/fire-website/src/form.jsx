@@ -3,13 +3,32 @@ import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
 
 const type = ['Urban','Forest']
+const district=["Aveiro",
+"Beja",
+"Braga",
+"Bragança",
+"Castelo Branco",
+"Coimbra",
+"Évora",
+"Faro",
+"Guarda",
+"Leiria",
+"Lisboa",
+"Portalegre",
+"Porto",
+"Santarém",
+"Setúbal",
+"Viana do Castelo",
+"Vila Real",
+"Viseu"
+]
 
-export const Form = ({ onSubmit,closeAction,setType}) => {
+export const Form = ({ onSubmit,closeAction}) => {
   let typeValue;
+  let districtValue;
 
   const submit = (event) => {
-    setType(typeValue);
-    onSubmit(event);
+    onSubmit(event,typeValue,districtValue);
     closeAction();
   }
 
@@ -17,6 +36,12 @@ export const Form = ({ onSubmit,closeAction,setType}) => {
     console.log('You selected ', option.label)
     typeValue = option.label
   }
+
+  const onSelectDistrict =  (option) => {
+    console.log('You selected ', option.label)
+    districtValue = option.label
+  }
+
 
   return (
     <form onSubmit={submit}>
@@ -31,6 +56,10 @@ export const Form = ({ onSubmit,closeAction,setType}) => {
       <div>
         Type of Fire: 
         <Dropdown onChange={onSelectType} options={type} value={typeValue} placeholder="Select an option" />
+      </div>
+      <div>
+        District: 
+        <Dropdown onChange={onSelectDistrict} options={district} value={districtValue} placeholder="Select an option" />
       </div>
        <div className="form-group">  
         <button className="button" type="submit" value="Submit">

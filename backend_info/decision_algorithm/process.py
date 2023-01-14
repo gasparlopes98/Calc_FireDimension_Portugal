@@ -2,9 +2,9 @@ import json
 import pandas as pd
 import numpy as np
 
-path_distance_matrix_location = "file_info/distance_matrix.txt"
-path_resources_by_severity = "decision_algorithm/severidade_info.json"
-path_resources_by_zone = "file_info/resources_by_zone.json"
+path_distance_matrix_location = "./backend_info/file_info/distance_matrix.txt"
+path_resources_by_severity = "./backend_info/decision_algorithm/severidade_info.json"
+path_resources_by_zone = "./backend_info/file_info/resources_by_zone.json"
 
 num_district=18
 rows = num_district+1
@@ -25,7 +25,7 @@ def process_info(fire_severity_by_zone):
     else:
         print("== RR Attribution ==")
         RR_attribuiton(needed_resources, allocation_matrix, cols)
-    
+        
     return allocation_matrix
 
 def allocate_resource(nfires,allocation_matrix,fire,fire_index,zones,resource,resource_index):

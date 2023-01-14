@@ -78,6 +78,39 @@ def get_info():
     return info_cidades 
 
 
+def calculate_index_for_city(cityName):
+    city = None
+    for cities in get_info():
+        if cities.city == cityName:
+            city = cities
+            break
+    if city ==None:
+        return None    
+    weather = get_weather_by_city(get_data_from_ipma(),cityName)
+    month = 1
+    print(weather)
+    temp = weather['temperature']
+    wind = weather['wind_speed']
+    reletativeHumadity = weather['humidity']
+    precipitation = weather['precipitation']
+    fwisystem= FWICLASS(temp,reletativeHumadity,wind,precipitation)
+    ffmc = fwisystem.FFMCcalc(city.ffmc)
+    dmc = fwisystem.DMCcalc(city.dmc,month)
+    dc = fwisystem.DCcalc(city.dc,month)
+    isi = fwisystem.ISIcalc(ffmc)
+    bui = fwisystem.BUIcalc(dmc,dc)
+    fwi = fwisystem.FWIcalc(isi,bui)
+    return {
+        ffmc:ffmc,
+        dmc:dmc,
+        dc:dc,
+        isi:isi,
+        bui:bui,
+        fwi:fwi
+    }
+
+
+
 def calculate_index():
     info_cidades = get_info()
     weather_list = get_data_from_ipma()
