@@ -240,3 +240,13 @@ def calculate_distance_traveled(allocation_matrix,needed_resources):
             distance_traveled+=(resources*distance)
         fire_index+=1
     return distance_traveled
+
+def removeFire(allocation_matrix, index_fire,fires):
+    
+    for dist in range(num_district):
+        allocation_matrix[len(fires)][0][dist]+=allocation_matrix[index_fire][0][dist]
+        allocation_matrix[len(fires)][1][dist]+=allocation_matrix[index_fire][1][dist]
+        allocation_matrix[len(fires)][2][dist]+=allocation_matrix[index_fire][2][dist]
+    
+    allocation_matrix = np.delete(allocation_matrix, index_fire, 0)
+    return allocation_matrix
