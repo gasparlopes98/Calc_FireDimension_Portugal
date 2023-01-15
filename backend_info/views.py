@@ -14,22 +14,51 @@ district = {}
 def index(request):
     load_locations()
     request_data = request.data
+    saved_fires = get_saved_fires()
+    if len(saved_fires)>0:
+        flatten(request_data,saved_fires)
+    return process_incoming(request_data)
+
+
+def process_incoming(request_data):
     severity_fire = []
+    print(request_data)
     for fire_data in request_data:
-        #index = calculate_index_for_city(fire_data["city"])
+        # index = calculate_index_for_city(fire_data["city"])
         severity = get_severity(fire_data["city"])
         severity_fire.append({
-            "zone" : get_zone_by_city(fire_data["city"]),
-            "type" : fire_data["type"],
-            "severity" : severity
+            "zone": get_zone_by_city(fire_data["city"]),
+            "type": fire_data["type"],
+            "severity": severity
         })
+    save_fires(request_data)
     fires = get_needed_resources(severity_fire)
     allocation_matrix = process_info(severity_fire)
     allocation_matrix = modi_optimization(allocation_matrix, fires)
     print('Initial Cost: ', int(calculate_distance_traveled(allocation_matrix, fires)))
-
-    test = translate_info(allocation_matrix,request_data)
+    test = translate_info(allocation_matrix, request_data)
     return HttpResponse(json.dumps(test))
+def flatten(l,la):
+    for item in la:
+        l.append(item)
+
+@api_view(['GET', 'POST', 'DELETE'])
+def delete(request):
+    number_to_delete = request.data["fire"]
+    firedata = get_saved_fires()
+    del firedata[number_to_delete]
+    if len(firedata) == 0:
+        save_fires(firedata)
+        return HttpResponse([])
+    return process_incoming(firedata)
+
+def get_saved_fires():
+    with open("info.json", "r") as file:
+        return json.loads(file.read())
+
+def save_fires(fires):
+    with open("info.json", "w") as outfile:
+        json.dump(fires, outfile)
 
 
 def translate_info(allocation_matrix,resource_data):
@@ -48,6 +77,7 @@ def translate_info(allocation_matrix,resource_data):
                     "hely" :helly
                 })
         information_to_return.append({
+            "id" : i,
             "latitude":resource_data[i]["latitude"],
         "longitude": resource_data[i]["longitude"],
         "resources_by_area" : resource_list
