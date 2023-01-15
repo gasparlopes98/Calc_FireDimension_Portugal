@@ -2,46 +2,45 @@ import pandas as pd
 import pickle
 
 class PREVISOES:
+
+    @staticmethod
+    def vegetacao(i):
+        switcher = {
+            'Porto': 82.99,
+            'Leiria': 127.73,
+            'Viana do Castelo': 71.85,
+            'Coimbra': 233.07,
+            'Aveiro': 80.53,
+            'Lisboa': 36.26,
+            'Braga': 40.35,
+            'Guarda': 111.60,
+            'Castelo Branco': 185.77,
+            'Viseu': 138.88,
+            'Santarém': 204.85,
+            'Vila Real': 70.13,
+            'Setúbal': 100,
+            'Faro': 145.2,
+            'Évora': 338.53,
+            'Bragança': 144.49,
+            'Beja': 244.67,
+            'Portalegre': 255.37,
+            'Grandola': 201.16,
+            'Caldas da Rainha': 61.69,
+            'Tomar': 153.86,
+            'Penafiel': 58.84,
+            'Guimarães': 45.13,
+            'Chaves': 70.97
+        }
+        return switcher.get(i)
     def tratamento_dados(self):
-        def vegetacao(i):
-            switcher={
-                'Porto': 82.99,
-                'Leiria': 127.73,
-                'Viana do Castelo': 71.85,
-                'Coimbra': 233.07,
-                'Aveiro': 80.53,
-                'Lisboa': 36.26,
-                'Braga': 40.35,
-                'Guarda': 111.60,
-                'Castelo Branco': 185.77,
-                'Viseu': 138.88,
-                'Santarém': 204.85,
-                'Vila Real': 70.13,
-                'Setúbal': 100,
-                'Faro': 145.2,
-                'Évora': 338.53,
-                'Bragança': 144.49,
-                'Beja': 244.67,
-                'Portalegre': 255.37,
-                'Grandola': 201.16,
-                'Caldas da Rainha': 61.69,
-                'Tomar': 153.86,
-                'Penafiel': 58.84,
-                'Guimarães': 45.13,
-                'Chaves': 70.97
-            }
-            return switcher.get(i)
+
 
         df = pd.read_csv("datasets/fogos_tratados.csv")
 
         # Dados inseridos pelo utilizador
-        hora = dia = mes = -1
-        while not 0 <= hora < 24:
-            hora = float(input('Hour: '))
-        while not 0 < dia <= 31:
-            dia = float(input('Day: '))
-        while not 0 < mes <= 12:
-            mes = float(input('Month: '))
+        hora = float(input('Hora: '))
+        dia = float(input('Dia: '))
+        mes = float(input('Mês: '))
         dsr = float(input('DSR: '))
         fwi = float(input('FWI: '))
         isi = float(input('ISI: '))
@@ -49,8 +48,8 @@ class PREVISOES:
         dmc = float(input('DMC: '))
         ffmc = float(input('FFMC: '))
         bui = float(input('BUI: '))
-        distrito = str(input('District: '))
-        area_vegetacao = vegetacao(distrito)
+        distrito = str(input('Distrito: '))
+        area_vegetacao = PREVISOES.vegetacao(distrito)
 
         # Valores máximos para a divisão para valores do SMOTE
         max_hora = df['Hora'].max()
@@ -81,14 +80,22 @@ class PREVISOES:
         # Array que vai ser dado para a previsão
         self.array = [novo_mes, novo_dia, nova_hora, novo_dsr, novo_fwi, novo_isi, novo_dc, 
         novo_dmc, novo_ffmc, novo_bui, novo_area_vegetacao]
-        return self.array, distrito
 
-def previsoes(array):
-    # Load the classifier
-    with open('saved_clf/extremely_classifier.pkl', 'rb') as fid:
-        clf_loaded = pickle.load(fid)
+    def previsoes(self):
+        # Load the classifier
+        with open('saved_clf/extremely_classifier.pkl', 'rb') as fid:
+            clf_loaded = pickle.load(fid)
 
-    previsao = clf_loaded.predict([array])
+        previsao = clf_loaded.predict([self.array])
 
-    # print('Previsão de uma severidade', previsao[0], 'para este incêndio.')
-    return previsao[0]
+        print('Previsão de uma severidade', previsao[0], 'para este incêndio.')
+
+    @staticmethod
+    def static_previsoes(data):
+        # Load the classifier
+        with open('./saved_clf/extremely_classifier.pkl', 'rb') as fid:
+            clf_loaded = pickle.load(fid)
+
+        previsao = clf_loaded.predict([data])
+
+        return previsao[0]
