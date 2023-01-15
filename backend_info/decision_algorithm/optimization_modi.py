@@ -1,6 +1,6 @@
 import process as pro
 import numpy as np
-import modi
+import backend_info.decision_algorithm.modi as modi
 
 district = 18
 def modi_optimization(initial_matrix,fires):

@@ -25,17 +25,19 @@ const rectangle = [
 
 function App() {
   const [points, setPoints] = useState(null);
-  const [type, setType] = useState("");
   const [number, setNumber] = useState(0);
 
+
   const triggerText = "Add Fire";
-  const onSubmit = (event) => {
+  const onSubmit = (event,type,district) => {
     event.preventDefault(event);
     let fire = {
       latitude: event.target.latitude.value,
       longitude: event.target.longitude.value,
-      type: type
+      type: type,
+      city : district
     };
+    console.log(fire)
     information_to_send.push(fire);
     setNumber(information_to_send.length);
   };
@@ -44,13 +46,13 @@ function App() {
     const response = await fetch("/info/", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: information_to_send,
+      body: JSON.stringify(information_to_send),
     });
     let fire_info = await response.json();
     console.log(fire_info);
     information_to_send = [];
     setNumber(0);
-    fires.push(fire_info);
+    fires=fire_info
   }
 
   return (
@@ -62,7 +64,6 @@ function App() {
         <Container
           triggerText={triggerText}
           onSubmit={onSubmit}
-          setType={setType}
         />
         <span>
           <button onClick={push_info_to_be_processed} variant="contained">
@@ -99,43 +100,6 @@ function App() {
         </MapContainer>
       </div>
     </div>
-  );
-}
-
-export default App;
-import logo from "./logo.svg";
-import "./App.css";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import { Icon } from "leaflet";
-import { React, useState } from "react";
-import pointsData from "./points.json";
-
-function App() {
-  const [points, setPoints] = useState(null);
-
-  return (
-    <MapContainer center={[39.48, -8.2245]} zoom={7} scrollWheelZoom={true}>
-      {pointsData.map((eachData) => (
-        <Marker
-          key={eachData.Id}
-          position={[eachData.Latitude, eachData.Longitude]}
-          eventHandlers={{
-            click: () => {
-              setPoints(eachData);
-            },
-          }}
-        >
-          <Popup>
-            {eachData.Location} <br /> Fun fact: {eachData.Fun_Fact}
-          </Popup>
-        </Marker>
-      ))}
-
-      <TileLayer
-        attribution='&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
-        url="https://tiles.stadiamaps.com/tiles/osm_bright/{z}/{x}/{y}{r}.png"
-      />
-    </MapContainer>
   );
 }
 
