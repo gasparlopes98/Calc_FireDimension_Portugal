@@ -5,6 +5,8 @@ from .decision_algorithm.process import process_info,get_needed_resources,calcul
 from .decision_algorithm.optimization_modi import modi_optimization
 from .prev_connection_layer import get_severity
 import json
+from os import path
+
 import random
 
 
@@ -53,6 +55,8 @@ def delete(request):
     return process_incoming(firedata)
 
 def get_saved_fires():
+    if not path.exists("info.json"):
+        return []
     with open("info.json", "r") as file:
         return json.loads(file.read())
 
