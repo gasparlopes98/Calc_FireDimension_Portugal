@@ -17,15 +17,16 @@ def process_info(fire_severity_by_zone):
     # get meios por zona
     allocation_matrix = get_resources_by_zone(allocation_matrix,cols)
     
-    if (enough_rr(needed_resources)):
-        # print("== Basic Attribution ==")
-        # basic_attribuiton(needed_resources, allocation_matrix, cols)
-        print("== RR Attribution ==")
-        RR_attribuiton(needed_resources, allocation_matrix, cols)
-    else:
-        print("== RR Attribution ==")
-        RR_attribuiton(needed_resources, allocation_matrix, cols)
-        
+    # if (enough_rr(needed_resources)):
+    #     # print("== Basic Attribution ==")
+    #     # basic_attribuiton(needed_resources, allocation_matrix, cols)
+    #     print("== RR Attribution ==")
+    #     RR_attribuiton(needed_resources, allocation_matrix, cols)
+    # else:
+    #     print("== RR Attribution ==")
+    #     RR_attribuiton(needed_resources, allocation_matrix, cols)
+    print("== RR Attribution ==")
+    RR_attribuiton(needed_resources, allocation_matrix, cols)
     return allocation_matrix
 
 def allocate_resource(nfires,allocation_matrix,fire,fire_index,zones,resource,resource_index):

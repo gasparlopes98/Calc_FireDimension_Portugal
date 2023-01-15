@@ -1,4 +1,4 @@
-import process as pro
+import backend_info.decision_algorithm.process as pro
 import numpy as np
 import backend_info.decision_algorithm.modi as modi
 
@@ -70,52 +70,52 @@ def modi_optimization(initial_matrix,fires):
     return initial_matrix
 
 
-fires = [{
-        'zone': 'Z1',
-        'type': 'F',
-        'severity': 4
-    }, {
-        'zone': 'Z1',
-        'type': 'F',
-        'severity': 3
-    }, {
-        'zone': 'Z1',
-        'type': 'F',
-        'severity': 4
-    }, {
-        'zone': 'Z10',
-        'type': 'F',
-        'severity': 1
-    }, {
-        'zone': 'Z9',
-        'type': 'F',
-        'severity': 4
-    }, {
-        'zone': 'Z10',
-        'type': 'F',
-        'severity': 4
-    }, {
-        'zone': 'Z18',
-        'type': 'F',
-        'severity': 4
-    }, {
-        'zone': 'Z18',
-        'type': 'F',
-        'severity': 4
-    }, {
-        'zone': 'Z18',
-        'type': 'F',
-        'severity': 4
-    }
-    ]
+# fires = [{
+#         'zone': 'Z1',
+#         'type': 'F',
+#         'severity': 4
+#     }, {
+#         'zone': 'Z1',
+#         'type': 'F',
+#         'severity': 3
+#     }, {
+#         'zone': 'Z1',
+#         'type': 'F',
+#         'severity': 4
+#     }, {
+#         'zone': 'Z10',
+#         'type': 'F',
+#         'severity': 1
+#     }, {
+#         'zone': 'Z9',
+#         'type': 'F',
+#         'severity': 4
+#     }, {
+#         'zone': 'Z10',
+#         'type': 'F',
+#         'severity': 4
+#     }, {
+#         'zone': 'Z18',
+#         'type': 'F',
+#         'severity': 4
+#     }, {
+#         'zone': 'Z18',
+#         'type': 'F',
+#         'severity': 4
+#     }, {
+#         'zone': 'Z18',
+#         'type': 'F',
+#         'severity': 4
+#     }
+#     ]
 
-allocation_matrix=pro.process_info(fires)
-print('Initial Cost: ', int(pro.calculate_distance_traveled(allocation_matrix,fires)))
-# pro.print_matrix(allocation_matrix)
+# allocation_matrix=pro.process_info(fires)
+# print('Initial Cost: ', int(pro.calculate_distance_traveled(allocation_matrix,fires)))
+# # pro.print_matrix(allocation_matrix)
 
-modi_matrix=modi_optimization(allocation_matrix, fires)
-print('Optimal cost: ', int(pro.calculate_distance_traveled(modi_matrix,fires)))
-# pro.print_matrix(modi_matrix)
+# modi_matrix=modi_optimization(allocation_matrix, fires)
+# print('Optimal cost: ', int(pro.calculate_distance_traveled(modi_matrix,fires)))
+# # pro.print_matrix(modi_matrix)
 
-modi_matrix=pro.removeFire(modi_matrix,1,fires)
-# pro.print_matrix(modi_matrix)
+# modi_matrix=pro.removeFire(modi_matrix,1,fires)
+# # pro.print_matrix(modi_matrix)
