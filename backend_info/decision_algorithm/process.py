@@ -27,6 +27,8 @@ def process_info(fire_severity_by_zone):
     #     RR_attribuiton(needed_resources, allocation_matrix, cols)
     print("== RR Attribution ==")
     RR_attribuiton(needed_resources, allocation_matrix, cols)
+    print_matrix(allocation_matrix)
+    print(calculate_distance_traveled(allocation_matrix,needed_resources))
     return allocation_matrix
 
 def allocate_resource(nfires,allocation_matrix,fire,fire_index,zones,resource,resource_index):

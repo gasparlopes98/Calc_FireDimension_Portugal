@@ -1,7 +1,9 @@
 from django.http import HttpResponse
 from .calculate_info import get_info, calculate_index_for_city
 from rest_framework.decorators import api_view
-from .decision_algorithm.process import process_info
+from .decision_algorithm.process import process_info,get_needed_resources,calculate_distance_traveled
+from .decision_algorithm.optimization_modi import modi_optimization
+from .prev_connection_layer import get_severity
 import json
 import random
 
@@ -21,8 +23,11 @@ def index(request):
             "type" : fire_data["type"],
             "severity" : severity
         })
-
+    fires = get_needed_resources(severity_fire)
     allocation_matrix = process_info(severity_fire)
+    allocation_matrix = modi_optimization(allocation_matrix, fires)
+    print('Initial Cost: ', int(calculate_distance_traveled(allocation_matrix, fires)))
+
     test = translate_info(allocation_matrix,request_data)
     return HttpResponse(json.dumps(test))
 
