@@ -14,10 +14,8 @@ def index(request):
     request_data = request.data
     severity_fire = []
     for fire_data in request_data:
-
-        index = calculate_index_for_city(fire_data["city"])
-        # insert code to get severity
-        severity = random.randint(0, 4)
+        #index = calculate_index_for_city(fire_data["city"])
+        severity = get_severity(fire_data["city"])
         severity_fire.append({
             "zone" : get_zone_by_city(fire_data["city"]),
             "type" : fire_data["type"],
