@@ -35,9 +35,13 @@ class PREVISOES:
         df = pd.read_csv("datasets/fogos_tratados.csv")
 
         # Dados inseridos pelo utilizador
-        hora = float(input('Hora: '))
-        dia = float(input('Dia: '))
-        mes = float(input('Mês: '))
+        hora = dia = mes = -1
+        while not 0 <= hora < 24:
+            hora = float(input('Hour: '))
+        while not 0 < dia <= 31:
+            dia = float(input('Day: '))
+        while not 0 < mes <= 12:
+            mes = float(input('Month: '))
         dsr = float(input('DSR: '))
         fwi = float(input('FWI: '))
         isi = float(input('ISI: '))
@@ -45,7 +49,7 @@ class PREVISOES:
         dmc = float(input('DMC: '))
         ffmc = float(input('FFMC: '))
         bui = float(input('BUI: '))
-        distrito = str(input('Distrito: '))
+        distrito = str(input('District: '))
         area_vegetacao = vegetacao(distrito)
 
         # Valores máximos para a divisão para valores do SMOTE
@@ -77,12 +81,14 @@ class PREVISOES:
         # Array que vai ser dado para a previsão
         self.array = [novo_mes, novo_dia, nova_hora, novo_dsr, novo_fwi, novo_isi, novo_dc, 
         novo_dmc, novo_ffmc, novo_bui, novo_area_vegetacao]
+        return self.array, distrito
 
-    def previsoes(self):
-        # Load the classifier
-        with open('saved_clf/extremely_classifier.pkl', 'rb') as fid:
-            clf_loaded = pickle.load(fid)
+def previsoes(array):
+    # Load the classifier
+    with open('saved_clf/extremely_classifier.pkl', 'rb') as fid:
+        clf_loaded = pickle.load(fid)
 
-        previsao = clf_loaded.predict([self.array])
+    previsao = clf_loaded.predict([array])
 
-        print('Previsão de uma severidade', previsao[0], 'para este incêndio.')
+    # print('Previsão de uma severidade', previsao[0], 'para este incêndio.')
+    return previsao[0]
