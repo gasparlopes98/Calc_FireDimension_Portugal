@@ -63,7 +63,7 @@ class PREVISOES:
         max_ffmc = df['FFMC'].max()
         max_bui = df['BUI'].max()
         max_area_vegetacao = df['AreaVegetacao'].max()
-
+        
         # Dados com o SMOTE
         nova_hora = hora/max_hora
         novo_dia = dia/max_dia
@@ -76,10 +76,11 @@ class PREVISOES:
         novo_ffmc = ffmc/max_ffmc
         novo_bui = bui/max_bui
         novo_area_vegetacao = area_vegetacao/max_area_vegetacao
-
+        print("passou")
         # Array que vai ser dado para a previsão
         self.array = [novo_mes, novo_dia, nova_hora, novo_dsr, novo_fwi, novo_isi, novo_dc, 
         novo_dmc, novo_ffmc, novo_bui, novo_area_vegetacao]
+        return self.array, distrito
 
     def previsoes(self):
         # Load the classifier
@@ -99,3 +100,13 @@ class PREVISOES:
         previsao = clf_loaded.predict([data])
 
         return previsao[0]
+
+def previsoes(array):
+    # Load the classifier
+    with open('saved_clf/extremely_classifier.pkl', 'rb') as fid:
+        clf_loaded = pickle.load(fid)
+
+    previsao = clf_loaded.predict([array])
+
+    # print('Previsão de uma severidade', previsao[0], 'para este incêndio.')
+    return previsao[0]
