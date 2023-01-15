@@ -6,5 +6,10 @@ module.exports = function (app) {
         target: "http://localhost:8000",
         secure: false
     });
+    const deleteProxy = createProxyMiddleware('/delete/', {
+        target: "http://localhost:8000",
+        secure: false
+    });
     app.use(appProxy);
+    app.use(deleteProxy)
 };
