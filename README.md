@@ -1,2 +1,6 @@
-# Calc_FireDimension_Portugal
-LEIRA CRLH!
+# Fire Dimension Prediction and Resource Allocation System for Portugal
+
+This system provides a weighted distribution of available firefighting resources based upon the estimated severity of the current active fires.
+This estimation is provided by an Extremely Randomized Trees Classifier model using a number of indexes that pertain to fire hazard previously collected. For the allocation of resources it's used a Modified Distribution (MODI). The MODI optimisation is an algorithm very used for allocation problems. The main objective is to minimise or maximise a cost, fulfilling every demand.
+
+Enhancing the resources allocation when new fires happen, has been one of the main concerns for the past years as global warming and the impact of human civilisation on the natural world has led to an overall increase in the number of forest fires as well as their severity. An implementation of this kind is not believed to be able to ever replace the need for a well trained and experienced firefighter command (or other civil protection service) that coordinates firefighting efforts and commands the firefighting means.
