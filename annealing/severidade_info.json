@@ -1,0 +1,72 @@
+[
+    {
+        "severity" : 0,
+        "type" : "U",
+        "jeeps": 5,
+        "trucks" : 1,
+        "air" : 0
+    },
+    {
+        "severity" : 1,
+        "type" : "U",
+        "jeeps": 15,
+        "trucks" : 2,
+        "air" : 0
+    },
+    {
+        "severity" : 2,
+        "type" : "U",
+        "jeeps": 20,
+        "trucks" : 3,
+        "air" : 0
+    },
+    {
+        "severity" : 3,
+        "type" : "U",
+        "jeeps": 30,
+        "trucks" : 4,
+        "air" : 0
+    },
+    {
+        "severity" : 4,
+        "type" : "U",
+        "jeeps": 70,
+        "trucks" : 10,
+        "air" : 1
+    },
+    {
+        "severity" : 0,
+        "type" : "F",
+        "jeeps": 5,
+        "trucks" : 1,
+        "air" : 0
+    },
+    {
+        "severity" : 1,
+        "type" : "F",
+        "jeeps": 10,
+        "trucks" : 2,
+        "air" : 0
+    },
+    {
+        "severity" : 2,
+        "type" : "F",
+        "jeeps": 20,
+        "trucks" : 4,
+        "air" : 1
+    },
+    {
+        "severity" : 3,
+        "type" : "F",
+        "jeeps": 65,
+        "trucks" : 35,
+        "air" : 2
+    },
+    {
+        "severity" : 4,
+        "type" : "F",
+        "jeeps": 80,
+        "trucks" : 50,
+        "air" : 3
+    }
+]
